@@ -1,4 +1,4 @@
-﻿# Member List
+# Member List
 
 | Name | MSSV |
 |------|------|
@@ -7,109 +7,75 @@
 | Trần Lê Quân | 31241021135 |
 | Lê Quân | 31241021233 |
 | Phạm Tuấn Đạt | 31241025206 |
-# 🌿 PlantMate — UI/UX Prototype
 
-PlantMate là ứng dụng di động kết nối cộng đồng yêu cây cảnh trong khu vực lân cận — nơi mọi người có thể **cho tặng, trao đổi, bán, và tái định cư (rehome)** cây cảnh, đồng thời **theo dõi & chăm sóc** khu vườn của riêng mình với sự hỗ trợ của AI.
+# PlantMate
 
-> ⚠️ Đây là bản **prototype giao diện** (UI mockup), các phản hồi AI trong ứng dụng hiện đang ở chế độ mô phỏng (simulated).
+PlantMate là ứng dụng cộng đồng giúp người yêu cây **cho tặng và trao đổi cây tại địa phương**, chăm sóc vườn riêng và thảo luận với nhau. Bán cây là loại tin phụ; phạm vi hiện tại không có giỏ hàng, thanh toán hoặc vận chuyển.
 
-----------------------------------------------------
+## Tình trạng repository — 26/10/2026
 
-## 📱 Tổng quan tính năng
+Repository hiện lưu prototype giao diện trong [frontend/](frontend/) và các sơ đồ. Phần Android bên dưới mô tả bộ mã Java/XML đã được rà soát trong thư mục làm việc của nhóm. Mã `app/`, Gradle wrapper và `docs/` của Android chưa được đưa lên trong thay đổi tài liệu này; clone repository hiện tại chưa đủ để build ứng dụng Android.
 
-### 1. Xác thực (Authentication)
-- Màn hình **Đăng nhập / Đăng ký** với email & mật khẩu
-- Hỗ trợ đăng nhập nhanh qua Google
-- Giao diện tối giản, tông màu xanh lá chủ đạo
+Việc bàn giao mã Android thực hiện theo phạm vi file trên các issue trong [Project PlantMate](https://github.com/users/nguyencaodien/projects/12). Prototype và các sơ đồ hiện có được giữ nguyên.
 
-### 2. Trang chủ cộng đồng (Community Feed)
-- Hiển thị danh sách cây theo khu vực (lọc theo bán kính, ví dụ *"within 5 km"*)
-- Bộ lọc theo loại tin đăng: **All / Give Away / Trade / Rehome**
-- Mỗi bài đăng gồm: ảnh cây, tên người đăng, khoảng cách, tên cây + loài, mô tả ngắn
-- Nút yêu thích (❤️) và **"Ask for this plant"** để liên hệ
-- Nút nổi (+) để tạo bài đăng mới
+## Điều hướng Android
 
-### 3. Chi tiết cây (Plant Listing Detail)
-- Ảnh lớn dạng carousel
-- Nhãn phân loại: `TRADE`, `SELL`, `REHOME`
-- Thông tin nhanh: ánh sáng (Sun), tần suất tưới (Water), độ khó chăm (Level)
-- Đánh giá người bán/trao đổi (rating ⭐)
-- Hai hành động chính: **Save** (lưu) và **Ask for it** (liên hệ)
-- Nút **"Share to Community"** để chia sẻ lên bảng tin
+Năm tab chính theo thứ tự cố định: **Home → Garden → Doctor → Community → Profile**. Inbox, Settings, các màn chi tiết/tạo nội dung và trợ lý Mầm là các màn phụ theo ngữ cảnh.
 
-### 4. Đăng bài lên cộng đồng (Create Post)
-- Ô nhập nội dung: chia sẻ tin vui, xin lời khuyên, hỏi đáp...
-- Thêm ảnh cây (tuỳ chọn)
-- Chọn danh mục: `Plant sharing`, `Plant win`, `Question`, `Tip`, `General`
-- Có thể đính kèm một cây cụ thể từ bộ sưu tập cá nhân
+## Chức năng có trong bộ mã Android đã rà soát
 
-### 5. Khu vườn của tôi (My Garden)
-- Tổng quan **"Your little jungle"** — số cây cần chăm sóc hôm nay
-- Danh sách nhắc việc nhanh: *Water now*, *Needs sun*, *Check soil*
-- Lưới thẻ cây với ảnh, tên, loài, và lịch tưới nước tiếp theo (đổi màu theo mức độ khẩn cấp: xanh lá → vàng → đỏ)
+- **Tài khoản:** Firebase Authentication, đăng ký/đăng nhập, khôi phục mật khẩu, hồ sơ và đăng xuất; đã có tích hợp Google/Facebook, việc sử dụng phụ thuộc cấu hình dịch vụ.
+- **Chia sẻ cây:** tin Give Away, Trade và Sell; tìm kiếm/lọc, lưu tin, nháp, xem trước, đăng tin và quản lý trạng thái. Các màn dùng chung một `listingId`.
+- **Garden:** cây cá nhân, ảnh cây, nhật ký chăm sóc, lịch tưới và nhắc việc trên thiết bị; dữ liệu riêng theo tài khoản.
+- **Doctor:** nhận dạng cây và gợi ý chẩn đoán từ ảnh qua Firebase AI Logic/Gemini, kiểm tra chất lượng ảnh, lịch sử cục bộ và phản hồi. Phản hồi ảnh chỉ được gửi khi người dùng đồng ý.
+- **Community:** bài viết, thích, bình luận/trả lời, chia sẻ tin cây, kết bạn và khoảnh khắc xanh; có thông báo trong ứng dụng.
+- **Inbox:** hội thoại một-một giữa các thành viên, hỗ trợ văn bản, ảnh, ghi âm ngắn và thẻ tin cây; có thể mở từ ngữ cảnh listing.
+- **Profile, Settings và an toàn:** chỉnh hồ sơ, lựa chọn Việt/Anh, tùy chọn cục bộ, báo cáo/chặn thành viên, đánh giá theo điều kiện tương tác và các màn quản trị đã có source.
+- **Mầm:** hướng dẫn chăm sóc bằng nội dung cục bộ; luồng này tách với phân tích ảnh AI của Doctor.
 
-### 6. Chi tiết & chăm sóc cây (Plant Detail & Care)
-- Trạng thái sức khỏe cây (ví dụ: **Thriving**)
-- Thông tin chăm sóc: Water, Light, Last care
-- Nút hành động nhanh: **Water now**, **Add care log**
-- Sau khi tưới, trạng thái cập nhật tức thì (nút chuyển thành "✓ Watered")
-- Nút **"Ask AI about [tên cây]"** để hỏi trợ lý AI
-- **Lịch sử chăm sóc (Care History)** dạng timeline theo thời gian
+Danh sách trên xác nhận sự hiện diện trong source, không thay thế kết quả kiểm thử hoặc chứng nhận dịch vụ Firebase đang hoạt động.
 
-### 7. Ghi nhật ký chăm sóc (Add Care Log)
-- Chọn loại hành động: Watered, Fertilized, Pruned, Rotated, Repotted, Checked soil
-- Ghi chú tuỳ chọn
-- Lưu log để cập nhật vào lịch sử
+## Kiến trúc và công nghệ
 
-### 8. Plant Doctor — Chẩn đoán cây bằng AI
-- Chụp ảnh hoặc tải ảnh cây lên để phân tích
-- Nút **"Analyse plant"** trả về kết quả với độ chính xác (%), tên bệnh nghi ngờ (ví dụ: *Possible Leaf Spot*)
-- Danh sách **các bước xử lý đề xuất** theo thứ tự ưu tiên
-- Có thể lưu kết quả chẩn đoán vào hồ sơ cây (**Save to plant**) hoặc chụp lại (**Retake**)
-- Ghi chú miễn trừ trách nhiệm: chỉ mang tính tham khảo, không thay thế tư vấn chuyên gia
+```text
+Activity / Fragment → ViewModel → Repository → DataSource / DAO → Firebase / Room
+```
 
-### 9. Trợ lý PlantMate AI (Chat)
-- Giao diện chat dạng bong bóng hội thoại
-- Gợi ý câu hỏi nhanh: *Care advice*, *What's wrong with my Monstera?*, *Watering...*
-- Cho phép gửi ảnh kèm câu hỏi
-- Nhắc nhở: *"AI suggestions may not always be accurate."*
+Ứng dụng Android dùng Java 11, XML, Material Components, RecyclerView, LiveData/ViewModel, Firebase Authentication, Cloud Firestore, Firebase AI Logic, Room, SharedPreferences, AlarmManager và Android Notifications. Cấu hình hiện tại: namespace/applicationId `com.example.ungdungchiasecaycanh`, minSdk 29, compileSdk/targetSdk 37.
 
-### 10. Nhắn tin giữa người dùng (Messaging)
-- Khung chat 1-1 gắn liền với tin đăng cụ thể (hiển thị ảnh, tên cây, giá ngay đầu khung chat)
-- Nút **"View plant"** để quay lại chi tiết tin đăng
-- Hỗ trợ gửi ảnh, biểu tượng bong bóng chat có badge số tin nhắn chưa đọc ở trang chủ
+## Nguồn dữ liệu
 
----
-
-## 🎨 Ngôn ngữ thiết kế (Design Language)
-
-| Thuộc tính | Mô tả |
+| Dữ liệu | Nơi lưu |
 |---|---|
-| **Màu chủ đạo** | Xanh lá đậm (`#1E4234`-ish) cho nút hành động chính, nền be/kem nhạt |
-| **Typography** | Font sans-serif hiện đại, tiêu đề đậm, phụ đề màu xám nhạt |
-| **Bo góc** | Card và input đều bo góc lớn (rounded-2xl), tạo cảm giác mềm mại |
-| **Icon** | Icon line-style tối giản (nhà, lá cây, kính lúp, chat, hồ sơ) |
-| **Thanh điều hướng dưới** | 5 tab: Home · Garden · Doctor · Chat · Profile |
-| **Trạng thái** | Dùng badge màu (xanh = ổn, vàng = cảnh báo, đỏ = cần xử lý gấp) |
+| Phiên đăng nhập | Firebase Authentication |
+| Hồ sơ, listing, bài viết, hội thoại, đánh giá và dữ liệu cộng đồng/an toàn | Cloud Firestore |
+| Ảnh chia sẻ nén và thumbnail; ảnh/voice của chat | Firestore qua các lớp dữ liệu ảnh/media; cấu hình hiện tại không dùng Firebase Storage |
+| Cây, care log, lịch sử Doctor, ảnh cây, nháp listing và dấu đã xem story | Room, **schema phiên bản 10**, truy cập theo tài khoản/chủ cây |
+| Tùy chọn và dấu trạng thái cá nhân | SharedPreferences theo UID; ngôn ngữ ứng dụng dùng cơ chế locale của AppCompat |
 
----
+Ảnh chia sẻ dùng reference như `pmimg://` để trỏ tới dữ liệu ảnh trong Firestore. URI ảnh cục bộ không được coi là ảnh đã công bố. Garden, nháp và lịch sử Doctor vẫn là dữ liệu trên thiết bị; chưa có đồng bộ Garden nhiều thiết bị.
 
-## 🗂️ Cấu trúc luồng người dùng (User Flow)
+## Chạy và kiểm tra
 
-```
-Đăng nhập
-   └── Trang chủ (Feed cộng đồng)
-         ├── Xem chi tiết tin đăng → Nhắn tin với chủ cây
-         ├── Đăng bài mới → Chia sẻ lên cộng đồng
-         ├── Khu vườn của tôi
-         │      └── Chi tiết cây → Ghi log chăm sóc → Lịch sử chăm sóc
-         ├── Plant Doctor
-         │      └── Chụp/tải ảnh → Kết quả chẩn đoán → Hỏi AI chi tiết
-         └── PlantMate AI Chat
+Prototype hiện có nằm trong [frontend/](frontend/). Với bộ mã Android đã được bàn giao đủ `app/` và Gradle wrapper, chạy từ gốc dự án trên Windows:
+
+```powershell
+.\gradlew.bat :app:assembleDebug
+.\gradlew.bat :app:testDebugUnitTest
 ```
 
----
+Các lệnh này chưa áp dụng cho bản clone chỉ có prototype. Hướng dẫn chuẩn bị môi trường Android/Firebase đầy đủ thuộc [issue #37](https://github.com/nguyencaodien/TreeShare/issues/37). Không đưa mật khẩu, private key, keystore hoặc App Check debug token vào Git.
 
-## 📌 Ghi chú
+## Giới hạn và tình trạng xác minh
 
-Đây là repo lưu trữ các màn hình UI (mockup) phục vụ mục đích trình bày ý tưởng sản phẩm / portfolio thiết kế. Chưa bao gồm mã nguồn triển khai thực tế.
+- Doctor cung cấp gợi ý AI, phụ thuộc cấu hình AI Logic/App Check, kết nối và quota; kết quả có thể sai.
+- Media hiện dành cho ảnh nén và ghi âm ngắn; không có video, group chat, cart, payment hoặc shipping.
+- Commit tài liệu này không chạy build/test/runtime. Trạng thái triển khai rules, nâng cấp dữ liệu trên thiết bị và nhắc tưới dài ngày cần được kiểm chứng riêng.
+- Một số tài liệu Android còn mô tả baseline cũ; việc hợp nhất theo source và quyết định đã duyệt nằm trong các issue tài liệu. Việc cập nhật README không tự phê duyệt tính năng mới.
+
+## Làm việc nhóm và tài liệu
+
+- [Kế hoạch 30 issue và phạm vi file](ISSUES_PLAN.md)
+- [Quy trình branch, commit và Pull Request](CONTRIBUTING.md)
+
+Các tài liệu sau đã có trong bộ mã Android cục bộ, chưa được đưa lên repository trong thay đổi này: `docs/FINAL_DEMO_SCRIPT.md`, `docs/DEMO_DATA_PLAN.md`, `docs/SCREENSHOT_CHECKLIST.md`, `docs/COURSE_CONCEPT_MAPPING.md` và `docs/FINAL_PROJECT_SUMMARY.md`.
