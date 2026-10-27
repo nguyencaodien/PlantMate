@@ -1,0 +1,896 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Admins are an allowlist (admins/{uid}). The first is added in the Firebase Console; admins then
+    // grant and revoke the role from the app, never their own. Suspended members may browse but not create content.
+    function isAdmin() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function isPostAuthor(postId) {
+      return request.auth != null
+        && get(/databases/$(database)/documents/posts/$(postId)).data.authorId == request.auth.uid;
+    }
+
+    function isSuspended(uid) {
+      return exists(/databases/$(database)/documents/suspendedUsers/$(uid));
+    }
+
+    function listingFields() {
+      return ['ownerId', 'nickname', 'species', 'description', 'type',
+        'price', 'lookingFor', 'imageUrls', 'locationText', 'status',
+        'createdAt', 'updatedAt'];
+    }
+
+    // Optional plant details (ListingDetails); older listings have none of them.
+    function listingDetailFields() {
+      return ['condition', 'heightCm', 'light', 'pickupTimes', 'category', 'potCm', 'age', 'negotiable'];
+    }
+
+    function validListingDetails(d) {
+      return (!('condition' in d) || (d.condition is list && d.condition.size() <= 5
+          && d.condition.hasOnly(['HEALTHY', 'WITH_POT', 'NEW_LEAVES', 'ROOTED', 'NEEDS_CARE'])))
+        && (!('heightCm' in d) || (d.heightCm is int && d.heightCm > 0 && d.heightCm <= 300))
+        && (!('light' in d) || (d.light is string && d.light in ['SUN', 'BRIGHT_INDIRECT', 'SHADE']))
+        && (!('pickupTimes' in d) || (d.pickupTimes is list && d.pickupTimes.size() <= 4
+          && d.pickupTimes.hasOnly(['SAT_MORNING', 'SUN_AFTERNOON', 'WEEKDAY_EVENING', 'WEEKDAY_DAYTIME'])))
+        && (!('category' in d) || (d.category is string && d.category in
+          ['DESK_LEAFY', 'SUCCULENT', 'HANGING', 'FLOWERING', 'HERB', 'BONSAI', 'OTHER']))
+        && (!('potCm' in d) || (d.potCm is int && d.potCm > 0 && d.potCm <= 100))
+        && (!('age' in d) || (d.age is string && d.age in ['UNDER_3_MONTHS', 'MONTHS_3_TO_12', 'OVER_A_YEAR']))
+        && (!('negotiable' in d) || d.negotiable is bool);
+    }
+
+    // A public http(s) URL, or pmimg://{id}: a member photo stored at images/{id}.
+    function validRemoteImage(image) {
+      return image is string && image.size() > 0
+        && (image.matches('https?://.+') || image.matches('pmimg://[A-Za-z0-9]{10,40}'));
+    }
+
+    // Profile avatar: none (initials), a built-in illustration, or a photo the member uploaded.
+    function validAvatar(avatar) {
+      return avatar is string
+        && (avatar == ''
+          || avatar.matches('preset:[a-z0-9_]{1,24}')
+          || (avatar.matches('pmimg://[A-Za-z0-9]{10,40}')
+            && get(/databases/$(database)/documents/images/$(avatar.replace('pmimg://', ''))).data.ownerId
+              == request.auth.uid));
+    }
+
+    function validImages(images) {
+      return images is list && images.size() <= 5
+        && (images.size() < 1 || validRemoteImage(images[0]))
+        && (images.size() < 2 || validRemoteImage(images[1]))
+        && (images.size() < 3 || validRemoteImage(images[2]))
+        && (images.size() < 4 || validRemoteImage(images[3]))
+        && (images.size() < 5 || validRemoteImage(images[4]));
+    }
+
+    function validListing(d) {
+      return d.keys().hasOnly(listingFields().concat(listingDetailFields()))
+        && d.keys().hasAll(listingFields())
+        && validListingDetails(d)
+        && d.ownerId is string
+        && d.nickname is string && d.nickname.size() > 0 && d.nickname.size() <= 60
+        && d.species is string && d.species.size() <= 100
+        && d.description is string && d.description.size() > 0
+        && d.description.size() <= 1000
+        && d.type is string && d.type in ['GIVE_AWAY', 'TRADE', 'SELL']
+        && d.price is int
+        && d.lookingFor is string && d.lookingFor.size() <= 200
+        && validImages(d.imageUrls)
+        && d.locationText is string && d.locationText.size() > 0
+        && d.locationText.size() <= 100
+        && d.status is string
+        && d.status in ['ACTIVE', 'RESERVED', 'REHOMED', 'UNAVAILABLE']
+        && d.createdAt is timestamp && d.updatedAt is timestamp
+        && ((d.type == 'GIVE_AWAY' && d.price == 0 && d.lookingFor == '')
+          || (d.type == 'TRADE' && d.price == 0 && d.lookingFor.size() > 0)
+          || (d.type == 'SELL' && d.price > 0 && d.lookingFor == ''));
+    }
+
+    function validStatusTransition(before, after) {
+      return (before == 'ACTIVE'
+          && after in ['ACTIVE', 'RESERVED', 'REHOMED', 'UNAVAILABLE'])
+        || (before == 'RESERVED'
+          && after in ['RESERVED', 'ACTIVE', 'REHOMED', 'UNAVAILABLE'])
+        || (before == 'UNAVAILABLE' && after in ['UNAVAILABLE', 'ACTIVE'])
+        || (before == 'REHOMED' && after == 'REHOMED');
+    }
+
+    function conversationFields() {
+      return ['listingId', 'ownerId', 'requesterId', 'participantIds',
+        'lastMessage', 'createdAt', 'updatedAt'];
+    }
+
+    function validConversation(d) {
+      return d.keys().hasOnly(conversationFields())
+        && d.keys().hasAll(conversationFields())
+        && d.listingId is string
+        && d.ownerId is string && d.ownerId.size() > 0
+        && d.requesterId is string && d.requesterId.size() > 0
+        && d.ownerId != d.requesterId
+        && d.participantIds is list && d.participantIds.size() == 2
+        && d.ownerId in d.participantIds
+        && d.requesterId in d.participantIds
+        && d.lastMessage is string && d.lastMessage.size() <= 1000
+        && d.createdAt is timestamp && d.updatedAt is timestamp;
+    }
+
+    // One conversation per pair of members: the ID is both user IDs in sorted order joined by "__".
+    // listingId / ownerId / requesterId name the plant being discussed most recently.
+    function isPairConversation(conversationId, d) {
+      return d.participantIds[0] < d.participantIds[1]
+        && conversationId == d.participantIds[0] + '__' + d.participantIds[1];
+    }
+
+    // A plant card in the chat: the listing must belong to one of the two members.
+    function validListingMessage(conversationId, d) {
+      let listingPath = /databases/$(database)/documents/listings/$(d.listingId);
+      return d.keys().hasOnly(['senderId', 'type', 'text', 'listingId', 'createdAt'])
+        && d.keys().hasAll(['senderId', 'type', 'text', 'listingId', 'createdAt'])
+        && d.type == 'LISTING'
+        && d.text == ''
+        && d.listingId is string && d.listingId.size() > 0
+        && exists(listingPath)
+        && get(listingPath).data.ownerId in get(
+          /databases/$(database)/documents/conversations/$(conversationId)).data.participantIds;
+    }
+
+    function validTextMessage(d) {
+      return d.keys().hasOnly(['senderId', 'type', 'text', 'createdAt'])
+        && d.keys().hasAll(['senderId', 'type', 'text', 'createdAt'])
+        && d.type == 'TEXT'
+        && d.text.size() > 0;
+    }
+
+    // Photo or voice message: points at chatMedia/{id} of the same kind, owned by the sender and
+    // stored for this conversation. Voice notes are 0.5 to 60 seconds.
+    function validMediaMessage(conversationId, d) {
+      let mediaId = d.mediaRef.replace('pmchat://', '');
+      let media = get(/databases/$(database)/documents/chatMedia/$(mediaId)).data;
+      return d.keys().hasOnly(['senderId', 'type', 'text', 'mediaRef', 'durationMs', 'createdAt'])
+        && d.keys().hasAll(['senderId', 'type', 'text', 'mediaRef', 'durationMs', 'createdAt'])
+        && d.type in ['IMAGE', 'VOICE']
+        && d.mediaRef is string && d.mediaRef.matches('pmchat://[A-Za-z0-9]{10,40}')
+        && d.durationMs is int
+        && media.ownerId == request.auth.uid
+        && media.conversationId == conversationId
+        && media.kind == d.type
+        && (d.type == 'IMAGE' ? d.durationMs == 0
+          : (d.durationMs >= 500 && d.durationMs <= 60000 && d.text == ''));
+    }
+
+    function isConversationParticipant(conversationId) {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/conversations/$(conversationId))
+        && request.auth.uid in get(
+          /databases/$(database)/documents/conversations/$(conversationId)
+        ).data.participantIds;
+    }
+
+    function isBlockedEitherDirection(uidA, uidB) {
+      return exists(/databases/$(database)/documents/users/$(uidA)/blockedUsers/$(uidB))
+        || exists(/databases/$(database)/documents/users/$(uidB)/blockedUsers/$(uidA));
+    }
+
+    function reportFields() {
+      return ['reporterId', 'targetType', 'targetId', 'parentId',
+        'reason', 'details', 'createdAt'];
+    }
+
+    function validReportTarget(d) {
+      return (d.targetType == 'USER'
+          && d.parentId == ''
+          && d.targetId != request.auth.uid
+          && exists(/databases/$(database)/documents/users/$(d.targetId)))
+        || (d.targetType == 'LISTING'
+          && d.parentId == ''
+          && exists(/databases/$(database)/documents/listings/$(d.targetId))
+          && get(/databases/$(database)/documents/listings/$(d.targetId)).data.ownerId
+            != request.auth.uid)
+        || (d.targetType == 'POST'
+          && d.parentId == ''
+          && exists(/databases/$(database)/documents/posts/$(d.targetId))
+          && get(/databases/$(database)/documents/posts/$(d.targetId)).data.authorId
+            != request.auth.uid)
+        || (d.targetType == 'COMMENT'
+          && d.parentId.size() > 0
+          && exists(/databases/$(database)/documents/posts/$(d.parentId))
+          && exists(/databases/$(database)/documents/posts/$(d.parentId)/comments/$(d.targetId))
+          && get(/databases/$(database)/documents/posts/$(d.parentId)/comments/$(d.targetId))
+            .data.authorId != request.auth.uid);
+    }
+
+    function reviewFields() {
+      return ['listingId', 'reviewerId', 'revieweeId', 'rating', 'comment', 'createdAt'];
+    }
+
+    function validReviewData(d) {
+      return d.keys().hasOnly(reviewFields())
+        && d.keys().hasAll(reviewFields())
+        && d.listingId is string && d.listingId.size() > 0
+        && d.reviewerId is string && d.reviewerId.size() > 0
+        && d.revieweeId is string && d.revieweeId.size() > 0
+        && d.reviewerId != d.revieweeId
+        && d.rating is int && d.rating >= 1 && d.rating <= 5
+        && d.comment is string && d.comment.size() <= 500
+        && d.createdAt is timestamp && d.createdAt == request.time;
+    }
+
+    function validReviewEvidence(d) {
+      let listing = get(/databases/$(database)/documents/listings/$(d.listingId)).data;
+      let directionValid = d.revieweeId == listing.ownerId
+        || d.reviewerId == listing.ownerId;
+      let requesterId = d.revieweeId == listing.ownerId
+        ? d.reviewerId : d.revieweeId;
+      let conversationId = d.listingId + '__' + requesterId;
+      let conversationPath = /databases/$(database)/documents/conversations/$(conversationId);
+      // The pair conversation of the two members (one per pair, whatever plant it discusses now).
+      let first = listing.ownerId < requesterId ? listing.ownerId : requesterId;
+      let second = listing.ownerId < requesterId ? requesterId : listing.ownerId;
+      let pairPath = /databases/$(database)/documents/conversations/$(first + '__' + second);
+      return listing.status == 'REHOMED'
+        && directionValid
+        && (exists(pairPath)
+          || (exists(conversationPath)
+            && get(conversationPath).data.listingId == d.listingId
+            && get(conversationPath).data.ownerId == listing.ownerId
+            && get(conversationPath).data.requesterId == requesterId
+            && get(conversationPath).data.participantIds is list
+            && get(conversationPath).data.participantIds.size() == 2
+            && listing.ownerId in get(conversationPath).data.participantIds
+            && requesterId in get(conversationPath).data.participantIds));
+    }
+
+    function postFields() {
+      return ['authorId', 'text', 'category', 'listingId', 'imageUrl', 'createdAt'];
+    }
+
+    function validPost(d) {
+      return d.keys().hasOnly(postFields())
+        && d.keys().hasAll(postFields())
+        && d.authorId is string && d.authorId == request.auth.uid
+        && d.text is string && d.text.size() > 0 && d.text.size() <= 2000
+        && d.category is string
+        && d.category in ['GENERAL', 'SHARING', 'QUESTION', 'PLANT_WIN', 'TIP']
+        && d.listingId is string
+        && d.imageUrl is string
+        && (d.imageUrl == '' || (d.imageUrl.size() <= 2048 && validRemoteImage(d.imageUrl)))
+        && d.createdAt is timestamp && d.createdAt == request.time
+        && (d.listingId == '' || (d.category == 'SHARING'
+          && exists(/databases/$(database)/documents/listings/$(d.listingId))
+          && get(/databases/$(database)/documents/listings/$(d.listingId)).data.status == 'ACTIVE'));
+    }
+
+    match /users/{uid} {
+      allow read: if request.auth != null;
+
+      allow create: if request.auth != null
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly([
+          'displayName', 'locationText', 'avatarUrl', 'bio', 'createdAt', 'updatedAt',
+          'emailVerified', 'phoneVerified', 'vneidVerified'
+        ])
+        && request.resource.data.keys().hasAll([
+          'displayName', 'locationText', 'avatarUrl', 'bio', 'createdAt', 'updatedAt'
+        ])
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() > 0
+        && request.resource.data.displayName.size() <= 60
+        && request.resource.data.locationText is string
+        && request.resource.data.locationText.size() > 0
+        && request.resource.data.locationText.size() <= 100
+        && validAvatar(request.resource.data.avatarUrl)
+        && request.resource.data.bio is string
+        && request.resource.data.bio.size() <= 500
+        && request.resource.data.createdAt is timestamp
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt is timestamp
+        && request.resource.data.updatedAt == request.time
+        && (!('emailVerified' in request.resource.data)
+          || request.resource.data.emailVerified == (request.auth.token.email_verified == true))
+        && request.resource.data.get('phoneVerified', false) == false
+        && request.resource.data.get('vneidVerified', false) == false;
+
+      allow update: if request.auth != null
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly([
+          'displayName', 'locationText', 'avatarUrl', 'bio', 'createdAt', 'updatedAt',
+          'emailVerified', 'phoneVerified', 'vneidVerified'
+        ])
+        && request.resource.data.keys().hasAll([
+          'displayName', 'locationText', 'avatarUrl', 'bio', 'createdAt', 'updatedAt'
+        ])
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() > 0
+        && request.resource.data.displayName.size() <= 60
+        && request.resource.data.locationText is string
+        && request.resource.data.locationText.size() > 0
+        && request.resource.data.locationText.size() <= 100
+        && request.resource.data.avatarUrl is string
+        && request.resource.data.bio is string
+        && request.resource.data.bio.size() <= 500
+        && request.resource.data.createdAt is timestamp
+        && request.resource.data.createdAt == resource.data.createdAt
+        && (request.resource.data.avatarUrl == resource.data.avatarUrl
+          || validAvatar(request.resource.data.avatarUrl))
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'displayName', 'locationText', 'avatarUrl', 'bio', 'updatedAt', 'emailVerified',
+          'phoneVerified', 'vneidVerified'
+        ])
+        // The public "email verified" flag can only change to what the sign-in token says.
+        && (request.resource.data.get('emailVerified', false) == resource.data.get('emailVerified', false)
+          || request.resource.data.emailVerified == (request.auth.token.email_verified == true))
+        // Demo checks (phone code, VNeID) can only be switched on by the member, never off.
+        && (request.resource.data.get('phoneVerified', false) == resource.data.get('phoneVerified', false)
+          || request.resource.data.phoneVerified == true)
+        && (request.resource.data.get('vneidVerified', false) == resource.data.get('vneidVerified', false)
+          || request.resource.data.vneidVerified == true)
+        && request.resource.data.updatedAt is timestamp
+        && request.resource.data.updatedAt == request.time;
+
+      // Admin moderation of profile text (name, area, bio); avatar and timestamps unchanged.
+      allow update: if isAdmin()
+        && request.resource.data.keys().hasOnly([
+          'displayName', 'locationText', 'avatarUrl', 'bio', 'createdAt', 'updatedAt',
+          'emailVerified', 'phoneVerified', 'vneidVerified'
+        ])
+        && request.resource.data.keys().hasAll([
+          'displayName', 'locationText', 'avatarUrl', 'bio', 'createdAt', 'updatedAt'
+        ])
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() > 0
+        && request.resource.data.displayName.size() <= 60
+        && request.resource.data.locationText is string
+        && request.resource.data.locationText.size() > 0
+        && request.resource.data.locationText.size() <= 100
+        && request.resource.data.bio is string
+        && request.resource.data.bio.size() <= 500
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.avatarUrl == resource.data.avatarUrl
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'displayName', 'locationText', 'bio', 'updatedAt'
+        ])
+        && request.resource.data.updatedAt == request.time;
+
+      // Account deletion: the member removes their own profile (the app deletes their content first).
+      allow delete: if request.auth != null && request.auth.uid == uid;
+
+      match /savedListings/{listingId} {
+        allow read: if request.auth != null
+          && request.auth.uid == uid;
+
+        allow create: if request.auth != null
+          && request.auth.uid == uid
+          && exists(/databases/$(database)/documents/listings/$(listingId))
+          && request.resource.data.keys().hasOnly(['savedAt'])
+          && request.resource.data.keys().hasAll(['savedAt'])
+          && request.resource.data.savedAt is timestamp
+          && request.resource.data.savedAt == request.time;
+
+        allow update: if false;
+
+        allow delete: if request.auth != null
+          && request.auth.uid == uid;
+      }
+
+      match /blockedUsers/{blockedUid} {
+        allow read: if request.auth != null && request.auth.uid == uid;
+        allow create: if request.auth != null
+          && request.auth.uid == uid
+          && blockedUid != uid
+          && exists(/databases/$(database)/documents/users/$(blockedUid))
+          && request.resource.data.keys().hasOnly(['createdAt'])
+          && request.resource.data.keys().hasAll(['createdAt'])
+          && request.resource.data.createdAt is timestamp
+          && request.resource.data.createdAt == request.time;
+        allow update: if false;
+        allow delete: if request.auth != null && request.auth.uid == uid;
+      }
+
+      // Friends: users/{a}/friends/{b} and users/{b}/friends/{a}, written together by the member
+      // accepting b's request while that request still exists. Either friend can remove both.
+      match /friends/{friendUid} {
+        allow read: if request.auth != null
+          && (request.auth.uid == uid || request.auth.uid == friendUid);
+        allow create: if request.auth != null
+          && uid != friendUid
+          && request.resource.data.keys().hasOnly(['createdAt'])
+          && request.resource.data.keys().hasAll(['createdAt'])
+          && request.resource.data.createdAt == request.time
+          && existsAfter(/databases/$(database)/documents/users/$(friendUid)/friends/$(uid))
+          && ((request.auth.uid == uid
+              && exists(/databases/$(database)/documents/friendRequests/$(friendUid + '_' + uid)))
+            || (request.auth.uid == friendUid
+              && exists(/databases/$(database)/documents/friendRequests/$(uid + '_' + friendUid))));
+        allow update: if false;
+        allow delete: if request.auth != null
+          && (request.auth.uid == uid || request.auth.uid == friendUid);
+      }
+    }
+
+    // In-app notifications (no server on Spark): the actor's app writes one into the recipient's list
+    // when commenting, replying, mentioning or liking a post. Only the recipient reads, marks read or deletes.
+    match /users/{uid}/notifications/{notificationId} {
+      allow read, delete: if request.auth != null && request.auth.uid == uid;
+      allow update: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read'])
+        && request.resource.data.read == true;
+      allow create: if request.auth != null
+        && request.auth.uid != uid
+        && !isSuspended(request.auth.uid)
+        && exists(/databases/$(database)/documents/users/$(uid))
+        && !isBlockedEitherDirection(uid, request.auth.uid)
+        && request.resource.data.keys().hasOnly(['type', 'actorId', 'postId', 'text', 'read', 'createdAt'])
+        && request.resource.data.actorId == request.auth.uid
+        && request.resource.data.type in ['COMMENT', 'REPLY', 'MENTION', 'LIKE']
+        && request.resource.data.postId is string
+        && exists(/databases/$(database)/documents/posts/$(request.resource.data.postId))
+        && request.resource.data.text is string && request.resource.data.text.size() <= 140
+        && request.resource.data.read == false
+        && request.resource.data.createdAt == request.time;
+    }
+
+    // Friend requests: friendRequests/{fromUid}_{toUid}. Only the two members see or remove one;
+    // it cannot be sent across a block, to a friend, or when the other member already asked.
+    match /friendRequests/{requestId} {
+      allow get, delete: if request.auth != null
+        && (requestId.matches(request.auth.uid + '_[A-Za-z0-9]+')
+          || requestId.matches('[A-Za-z0-9]+_' + request.auth.uid));
+      allow list: if request.auth != null
+        && (resource.data.fromId == request.auth.uid || resource.data.toId == request.auth.uid);
+      allow create: if request.auth != null && !isSuspended(request.auth.uid)
+        && request.resource.data.keys().hasOnly(['fromId', 'toId', 'createdAt'])
+        && request.resource.data.keys().hasAll(['fromId', 'toId', 'createdAt'])
+        && request.resource.data.fromId == request.auth.uid
+        && request.resource.data.toId is string
+        && request.resource.data.toId != request.auth.uid
+        && requestId == request.auth.uid + '_' + request.resource.data.toId
+        && exists(/databases/$(database)/documents/users/$(request.resource.data.toId))
+        && !isBlockedEitherDirection(request.auth.uid, request.resource.data.toId)
+        && !exists(/databases/$(database)/documents/users/$(request.auth.uid)/friends/$(request.resource.data.toId))
+        && !exists(/databases/$(database)/documents/friendRequests/$(request.resource.data.toId + '_' + request.auth.uid))
+        && request.resource.data.createdAt == request.time;
+      allow update: if false;
+    }
+
+    // A photo with audience 'friends' (a story photo) is for its owner, their friends and admins.
+    function canSeePhoto(photo) {
+      return request.auth != null
+        && (photo.get('audience', 'public') != 'friends'
+          || photo.ownerId == request.auth.uid
+          || exists(/databases/$(database)/documents/users/$(request.auth.uid)/friends/$(photo.ownerId))
+          || isAdmin());
+    }
+
+    // Community "green moments": a photo story the author and their friends can read. It expires
+    // after 24 hours on the device; the author (or an admin) removes it.
+    match /stories/{storyId} {
+      allow read: if request.auth != null
+        && (resource.data.authorId == request.auth.uid
+          || exists(/databases/$(database)/documents/users/$(request.auth.uid)/friends/$(resource.data.authorId))
+          || isAdmin());
+      allow create: if request.auth != null && !isSuspended(request.auth.uid)
+        && request.resource.data.keys().hasOnly(['authorId', 'title', 'caption', 'imageUrl', 'createdAt'])
+        && request.resource.data.keys().hasAll(['authorId', 'title', 'caption', 'imageUrl', 'createdAt'])
+        && request.resource.data.authorId == request.auth.uid
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 24
+        && request.resource.data.caption is string && request.resource.data.caption.size() <= 200
+        && request.resource.data.imageUrl is string
+        && request.resource.data.imageUrl.matches('pmimg://[A-Za-z0-9]{10,40}')
+        && get(/databases/$(database)/documents/images/$(request.resource.data.imageUrl.replace('pmimg://', ''))).data.ownerId
+          == request.auth.uid
+        // The story photo must be friends-only (BUG-001: a public photo would leak the story).
+        && get(/databases/$(database)/documents/images/$(request.resource.data.imageUrl.replace('pmimg://', ''))).data.get('audience', 'public')
+          == 'friends'
+        && request.resource.data.createdAt == request.time;
+      allow update: if false;
+      allow delete: if request.auth != null
+        && (resource.data.authorId == request.auth.uid || isAdmin());
+    }
+
+    // One heart per friend on a story. The author reads them all (the count); a member reads their own.
+    match /stories/{storyId}/likes/{uid} {
+      allow read: if request.auth != null
+        && (request.auth.uid == uid
+          || get(/databases/$(database)/documents/stories/$(storyId)).data.authorId == request.auth.uid);
+      allow create: if request.auth != null && request.auth.uid == uid && !isSuspended(uid)
+        && request.resource.data.keys().hasOnly(['createdAt'])
+        && request.resource.data.createdAt == request.time
+        && exists(/databases/$(database)/documents/users/$(uid)/friends/$(
+          get(/databases/$(database)/documents/stories/$(storyId)).data.authorId));
+      allow update: if false;
+      allow delete: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Plant Doctor "was this right?" answers, to measure and later train the model. Admin-only reads.
+    match /doctorFeedback/{feedbackId} {
+      allow read: if isAdmin();
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly(['ownerId', 'correct', 'diagnosis', 'plantName',
+          'scientificName', 'confidence', 'healthy', 'correction', 'photoId', 'createdAt'])
+        && request.resource.data.keys().hasAll(['ownerId', 'correct', 'diagnosis', 'correction',
+          'photoId', 'createdAt'])
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.correct is bool
+        && request.resource.data.diagnosis is string && request.resource.data.diagnosis.size() <= 200
+        && (!('plantName' in request.resource.data)
+          || (request.resource.data.plantName is string && request.resource.data.plantName.size() <= 100))
+        && (!('scientificName' in request.resource.data)
+          || (request.resource.data.scientificName is string && request.resource.data.scientificName.size() <= 120))
+        && (!('confidence' in request.resource.data)
+          || (request.resource.data.confidence is number
+            && request.resource.data.confidence >= 0 && request.resource.data.confidence <= 1))
+        && (!('healthy' in request.resource.data) || request.resource.data.healthy is bool)
+        && request.resource.data.correction is string && request.resource.data.correction.size() <= 300
+        && request.resource.data.photoId is string
+        && (request.resource.data.photoId == '' || request.resource.data.photoId.matches('[A-Za-z0-9]{10,40}'))
+        && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
+
+    // Photos a member chose to share with a Doctor answer; private to admins, never shown in the app.
+    match /doctorFeedbackPhotos/{photoId} {
+      allow read: if isAdmin();
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly(['ownerId', 'data', 'width', 'height', 'createdAt'])
+        && request.resource.data.keys().hasAll(['ownerId', 'data', 'width', 'height', 'createdAt'])
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.data is string
+        && request.resource.data.data.size() > 0 && request.resource.data.data.size() <= 700000
+        && request.resource.data.width is int && request.resource.data.height is int
+        && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
+
+    match /listings/{listingId} {
+      allow read: if request.auth != null;
+
+      allow create: if request.auth != null
+        && !isSuspended(request.auth.uid)
+        && validListing(request.resource.data)
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.status == 'ACTIVE'
+        // Selling is for members whose email Firebase has confirmed (anti-fraud).
+        // Selling needs a confirmed email plus the phone and VNeID demo checks on the profile (anti-fraud).
+        && (request.resource.data.type != 'SELL' || (request.auth.token.email_verified == true
+          && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('phoneVerified', false) == true
+          && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('vneidVerified', false) == true))
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+
+      allow update: if request.auth != null
+        && resource.data.ownerId == request.auth.uid
+        && validListing(request.resource.data)
+        && request.resource.data.ownerId == resource.data.ownerId
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['status', 'updatedAt'])
+        && request.resource.data.updatedAt == request.time
+        && validStatusTransition(resource.data.status,
+          request.resource.data.status);
+
+      // Admin edit: any valid listing content and status; owner and creation time unchanged.
+      allow update: if isAdmin()
+        && validListing(request.resource.data)
+        && request.resource.data.ownerId == resource.data.ownerId
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.updatedAt == request.time;
+
+      // Admins moderate; the owner deletes their own listings when deleting their account.
+      allow delete: if isAdmin() || (request.auth != null && resource.data.ownerId == request.auth.uid);
+    }
+
+    match /conversations/{conversationId} {
+      allow read: if request.auth != null
+        && request.auth.uid in resource.data.participantIds;
+
+      allow create: if request.auth != null
+        && !isSuspended(request.auth.uid)
+        && validConversation(request.resource.data)
+        && request.auth.uid == request.resource.data.requesterId
+        && isPairConversation(conversationId, request.resource.data)
+        // A chat started from a member's profile has no plant (listingId ''); "ownerId" is then the other member.
+        && (request.resource.data.listingId == ''
+          ? exists(/databases/$(database)/documents/users/$(request.resource.data.ownerId))
+          : (exists(/databases/$(database)/documents/listings/$(request.resource.data.listingId))
+            && get(/databases/$(database)/documents/listings/$(request.resource.data.listingId))
+              .data.ownerId == request.resource.data.ownerId))
+        && !isBlockedEitherDirection(request.resource.data.ownerId,
+          request.resource.data.requesterId)
+        && request.resource.data.lastMessage == ''
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+
+      // Existing participant summary updates remain independent of message writes.
+      // Message CREATE below is the security boundary for new text after a block.
+      // A member asking about another plant of the same pair switches the plant being discussed.
+      allow update: if request.auth != null
+        && request.auth.uid in resource.data.participantIds
+        && validConversation(request.resource.data)
+        && request.resource.data.participantIds == resource.data.participantIds
+        && request.resource.data.createdAt == resource.data.createdAt
+        && ((request.resource.data.listingId == resource.data.listingId
+            && request.resource.data.ownerId == resource.data.ownerId
+            && request.resource.data.requesterId == resource.data.requesterId
+            && request.resource.data.diff(resource.data).affectedKeys()
+              .hasOnly(['lastMessage', 'updatedAt'])
+            && request.resource.data.updatedAt == request.time)
+          || (isPairConversation(conversationId, resource.data)
+            && !isSuspended(request.auth.uid)
+            && request.resource.data.diff(resource.data).affectedKeys()
+              .hasOnly(['listingId', 'ownerId', 'requesterId'])
+            && request.resource.data.requesterId == request.auth.uid
+            && exists(/databases/$(database)/documents/listings/$(request.resource.data.listingId))
+            && get(/databases/$(database)/documents/listings/$(request.resource.data.listingId))
+              .data.ownerId == request.resource.data.ownerId
+            && !isBlockedEitherDirection(request.resource.data.ownerId,
+              request.resource.data.requesterId)));
+
+      allow delete: if false;
+
+      match /messages/{messageId} {
+        allow read: if isConversationParticipant(conversationId);
+
+        allow create: if isConversationParticipant(conversationId)
+          && !isSuspended(request.auth.uid)
+          && !isBlockedEitherDirection(
+            get(/databases/$(database)/documents/conversations/$(conversationId)).data.ownerId,
+            get(/databases/$(database)/documents/conversations/$(conversationId)).data.requesterId)
+          && request.resource.data.senderId is string
+          && request.resource.data.senderId == request.auth.uid
+          && request.resource.data.createdAt is timestamp
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.text is string
+          && request.resource.data.text.size() <= 1000
+          && (validTextMessage(request.resource.data)
+            || validMediaMessage(conversationId, request.resource.data)
+            || validListingMessage(conversationId, request.resource.data));
+
+        allow update, delete: if false;
+      }
+    }
+
+    // Private chat media (photos and voice notes): only the two participants can read them.
+    match /chatMedia/{mediaId} {
+      allow read: if request.auth != null
+        && (resource.data.ownerId == request.auth.uid
+          || isConversationParticipant(resource.data.conversationId));
+      allow create: if request.auth != null && !isSuspended(request.auth.uid)
+        && request.resource.data.keys().hasOnly(['ownerId', 'conversationId', 'kind', 'data', 'mime', 'durationMs', 'createdAt'])
+        && request.resource.data.keys().hasAll(['ownerId', 'conversationId', 'kind', 'data', 'mime', 'durationMs', 'createdAt'])
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.conversationId is string
+        && isConversationParticipant(request.resource.data.conversationId)
+        && !isBlockedEitherDirection(
+          get(/databases/$(database)/documents/conversations/$(request.resource.data.conversationId)).data.ownerId,
+          get(/databases/$(database)/documents/conversations/$(request.resource.data.conversationId)).data.requesterId)
+        && request.resource.data.kind in ['IMAGE', 'VOICE']
+        && request.resource.data.data is string
+        && request.resource.data.data.size() > 100
+        && request.resource.data.data.size() <= 700000
+        && request.resource.data.mime in ['image/jpeg', 'audio/mp4']
+        && request.resource.data.durationMs is int
+        && request.resource.data.durationMs >= 0
+        && request.resource.data.durationMs <= 60000
+        && request.resource.data.createdAt == request.time;
+      allow update: if false;
+      allow delete: if request.auth != null && resource.data.ownerId == request.auth.uid;
+    }
+
+    match /reports/{reportId} {
+      allow read: if isAdmin();
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly(reportFields())
+        && request.resource.data.keys().hasAll(reportFields())
+        && request.resource.data.reporterId is string
+        && request.resource.data.reporterId == request.auth.uid
+        && request.resource.data.targetType is string
+        && request.resource.data.targetType in ['USER', 'LISTING', 'POST', 'COMMENT']
+        && request.resource.data.targetId is string
+        && request.resource.data.targetId.size() > 0
+        && request.resource.data.parentId is string
+        && request.resource.data.reason is string
+        && request.resource.data.reason in [
+          'HARASSMENT', 'SPAM', 'SCAM', 'INAPPROPRIATE', 'OTHER'
+        ]
+        && request.resource.data.details is string
+        && request.resource.data.details.size() <= 500
+        && (request.resource.data.reason != 'OTHER'
+          || request.resource.data.details.size() > 0)
+        && request.resource.data.createdAt is timestamp
+        && request.resource.data.createdAt == request.time
+        && validReportTarget(request.resource.data);
+      allow update, delete: if false;
+    }
+
+    match /reviews/{reviewId} {
+      allow read: if request.auth != null;
+
+      allow create: if request.auth != null
+        && validReviewData(request.resource.data)
+        && request.resource.data.reviewerId == request.auth.uid
+        && reviewId == request.resource.data.listingId + '__'
+          + request.resource.data.reviewerId + '__'
+          + request.resource.data.revieweeId
+        && exists(/databases/$(database)/documents/listings/$(request.resource.data.listingId))
+        && validReviewEvidence(request.resource.data);
+
+      allow update: if false;
+      // A reviewer withdraws their own reviews when deleting their account.
+      allow delete: if request.auth != null && resource.data.reviewerId == request.auth.uid;
+    }
+
+    // Member photos (no Cloud Storage on this project): a compressed JPEG as base64. A story photo is
+    // marked audience 'friends': only its owner, their friends and admins read it. Members list only
+    // their own photos (account deletion); everyone else fetches a photo by its ID.
+    match /images/{imageId} {
+      allow get: if canSeePhoto(resource.data);
+      allow list: if request.auth != null && (resource.data.ownerId == request.auth.uid || isAdmin());
+      allow create: if request.auth != null && !isSuspended(request.auth.uid)
+        && request.resource.data.keys().hasOnly(['ownerId', 'data', 'width', 'height', 'createdAt', 'audience'])
+        && request.resource.data.get('audience', 'public') in ['public', 'friends']
+        && request.resource.data.keys().hasAll(['ownerId', 'data', 'width', 'height', 'createdAt'])
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.data is string
+        && request.resource.data.data.size() > 100
+        && request.resource.data.data.size() <= 700000
+        && request.resource.data.width is int && request.resource.data.width > 0
+        && request.resource.data.width <= 1600
+        && request.resource.data.height is int && request.resource.data.height > 0
+        && request.resource.data.height <= 1600
+        && request.resource.data.createdAt == request.time;
+      allow update: if false;
+      allow delete: if request.auth != null
+        && (resource.data.ownerId == request.auth.uid || isAdmin());
+    }
+
+    // Small copy of images/{imageId} for cards; written by the photo's owner right after it, with the
+    // same audience as the photo.
+    match /imageThumbs/{imageId} {
+      allow get: if canSeePhoto(resource.data);
+      allow list: if request.auth != null && (resource.data.ownerId == request.auth.uid || isAdmin());
+      allow create: if request.auth != null && !isSuspended(request.auth.uid)
+        && request.resource.data.keys().hasOnly(['ownerId', 'data', 'createdAt', 'audience'])
+        && request.resource.data.get('audience', 'public')
+          == get(/databases/$(database)/documents/images/$(imageId)).data.get('audience', 'public')
+        && request.resource.data.keys().hasAll(['ownerId', 'data', 'createdAt'])
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.data is string
+        && request.resource.data.data.size() > 100
+        && request.resource.data.data.size() <= 120000
+        && request.resource.data.createdAt == request.time
+        && get(/databases/$(database)/documents/images/$(imageId)).data.ownerId == request.auth.uid;
+      allow update: if false;
+      allow delete: if request.auth != null
+        && (resource.data.ownerId == request.auth.uid || isAdmin());
+    }
+
+    match /posts/{postId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && !isSuspended(request.auth.uid)
+        && validPost(request.resource.data);
+      // Admin edit of text, category and image; author, listing and time unchanged.
+      allow update: if isAdmin()
+        && request.resource.data.keys().hasOnly(postFields())
+        && request.resource.data.keys().hasAll(postFields())
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['text', 'category', 'imageUrl'])
+        && request.resource.data.imageUrl is string
+        && (request.resource.data.imageUrl == ''
+          || (request.resource.data.imageUrl.size() <= 2048 && validRemoteImage(request.resource.data.imageUrl)))
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 2000
+        && request.resource.data.category in ['GENERAL', 'SHARING', 'QUESTION', 'PLANT_WIN', 'TIP']
+        && (request.resource.data.listingId == '' || request.resource.data.category == 'SHARING');
+      allow delete: if isAdmin() || (request.auth != null && resource.data.authorId == request.auth.uid);
+
+      match /likes/{uid} {
+        allow read: if request.auth != null;
+        allow create: if request.auth != null
+          && uid == request.auth.uid
+          && exists(/databases/$(database)/documents/posts/$(postId))
+          && request.resource.data.keys().hasOnly(['createdAt'])
+          && request.resource.data.keys().hasAll(['createdAt'])
+          && request.resource.data.createdAt is timestamp
+          && request.resource.data.createdAt == request.time;
+        allow update: if false;
+        // The post's author may clear likes when deleting their post.
+        allow delete: if (request.auth != null && uid == request.auth.uid) || isAdmin() || isPostAuthor(postId);
+      }
+
+      match /comments/{commentId} {
+        allow read: if request.auth != null;
+        allow create: if request.auth != null
+          && !isSuspended(request.auth.uid)
+          && exists(/databases/$(database)/documents/posts/$(postId))
+          && request.resource.data.keys().hasOnly([
+            'authorId', 'replyToCommentId', 'text', 'createdAt'
+          ])
+          && request.resource.data.keys().hasAll([
+            'authorId', 'replyToCommentId', 'text', 'createdAt'
+          ])
+          && request.resource.data.authorId is string
+          && request.resource.data.authorId == request.auth.uid
+          && request.resource.data.replyToCommentId is string
+          && request.resource.data.text is string
+          && request.resource.data.text.size() > 0
+          && request.resource.data.text.size() <= 1000
+          && request.resource.data.createdAt is timestamp
+          && request.resource.data.createdAt == request.time
+          && (request.resource.data.replyToCommentId == ''
+            || (exists(/databases/$(database)/documents/posts/$(postId)/comments/$(request.resource.data.replyToCommentId))
+              && get(/databases/$(database)/documents/posts/$(postId)/comments/$(request.resource.data.replyToCommentId)).data.replyToCommentId == ''));
+        allow update: if false;
+        // ...and comments, so nothing of a deleted post is left behind.
+        allow delete: if isAdmin() || (request.auth != null && resource.data.authorId == request.auth.uid)
+          || isPostAuthor(postId);
+      }
+    }
+
+    // ---- Admin (see docs/ADMIN_FLOW_DESIGN.md) ----
+    // Collection-group reads of comments (account deletion finds a member's comments on every post).
+    match /{path=**}/comments/{commentId} {
+      allow read: if request.auth != null;
+    }
+
+    match /admins/{uid} {
+      allow read: if request.auth != null && (request.auth.uid == uid || isAdmin());
+      allow create: if isAdmin()
+        && uid != request.auth.uid
+        && exists(/databases/$(database)/documents/users/$(uid))
+        && request.resource.data.keys().hasOnly(['adminId', 'createdAt'])
+        && request.resource.data.keys().hasAll(['adminId', 'createdAt'])
+        && request.resource.data.adminId == request.auth.uid
+        && request.resource.data.createdAt == request.time;
+      allow update: if false;
+      // Revoking yourself is refused, so the last admin can never lock everyone out.
+      allow delete: if isAdmin() && uid != request.auth.uid;
+    }
+
+    match /reportReviews/{reportId} {
+      allow read: if isAdmin();
+      allow create, update: if isAdmin()
+        && exists(/databases/$(database)/documents/reports/$(reportId))
+        && request.resource.data.keys().hasOnly(['status', 'note', 'adminId', 'reviewedAt'])
+        && request.resource.data.keys().hasAll(['status', 'note', 'adminId', 'reviewedAt'])
+        && request.resource.data.status in ['RESOLVED', 'DISMISSED']
+        && request.resource.data.note is string && request.resource.data.note.size() <= 500
+        && request.resource.data.adminId == request.auth.uid
+        && request.resource.data.reviewedAt == request.time;
+      allow delete: if false;
+    }
+
+    match /suspendedUsers/{uid} {
+      allow read: if request.auth != null && (request.auth.uid == uid || isAdmin());
+      allow create: if isAdmin()
+        && uid != request.auth.uid
+        && exists(/databases/$(database)/documents/users/$(uid))
+        && request.resource.data.keys().hasOnly(['note', 'adminId', 'createdAt'])
+        && request.resource.data.keys().hasAll(['note', 'adminId', 'createdAt'])
+        && request.resource.data.note is string && request.resource.data.note.size() <= 500
+        && request.resource.data.adminId == request.auth.uid
+        && request.resource.data.createdAt == request.time;
+      allow update: if false;
+      allow delete: if isAdmin();
+    }
+
+    match /adminActions/{actionId} {
+      allow read: if isAdmin();
+      allow create: if isAdmin()
+        && request.resource.data.keys().hasOnly(['adminId', 'action', 'targetType', 'targetId', 'note', 'createdAt'])
+        && request.resource.data.keys().hasAll(['adminId', 'action', 'targetType', 'targetId', 'note', 'createdAt'])
+        && request.resource.data.adminId == request.auth.uid
+        && request.resource.data.action is string
+        && request.resource.data.targetType in ['USER', 'LISTING', 'POST', 'COMMENT', 'REPORT']
+        && request.resource.data.targetId is string
+        && request.resource.data.note is string && request.resource.data.note.size() <= 500
+        && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
+  }
+}
