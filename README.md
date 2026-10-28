@@ -44,7 +44,7 @@ PlantMate là ứng dụng di động kết nối cộng đồng yêu cây cản
 - Có thể đính kèm một cây cụ thể từ bộ sưu tập cá nhân
 
 ### 5. Khu vườn của tôi (My Garden)
-- Tổng quan **"Your little jungle"** — số cây cần chăm sóc hôm nay
+- Tổng quan số cây cần chăm sóc hôm nay
 - Danh sách nhắc việc nhanh: *Water now*, *Needs sun*, *Check soil*
 - Lưới thẻ cây với ảnh, tên, loài, và lịch tưới nước tiếp theo (đổi màu theo mức độ khẩn cấp: xanh lá → vàng → đỏ)
 
