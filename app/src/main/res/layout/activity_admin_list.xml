@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Admin list (listings, posts, members, reports or the activity log). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/adminListRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/adminListHero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_hero"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="48dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/adminListBack"
+                    style="@style/Widget.PlantMate.IconButton.Hero"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="@string/action_back"
+                    app:icon="@drawable/ic_arrow_back" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/adminListTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:letterSpacing="-0.02"
+                android:textAppearance="@style/TextAppearance.PlantMate.Hero"
+                android:textColor="@color/color_hero_text" />
+            <TextView
+                android:id="@+id/adminListSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                android:textColor="@color/color_hero_text_muted"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/adminListSearchBar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="-28dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bg_search_field"
+            android:elevation="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_search"
+                app:tint="@color/color_text_secondary" />
+
+            <EditText
+                android:id="@+id/adminListSearch"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="@string/admin_search_hint"
+                android:imeOptions="actionSearch"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.PlantMate.Body"
+                android:textColorHint="@color/color_text_secondary"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:id="@+id/adminListFilterScroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:clipToPadding="false"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:scrollbars="none"
+            android:visibility="gone">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/adminListFilters"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:chipSpacingHorizontal="8dp"
+                app:selectionRequired="true"
+                app:singleSelection="true"
+                app:singleLine="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/adminFilterOpen"
+                    style="@style/PlantMateFilterChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/admin_filter_open" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/adminFilterResolved"
+                    style="@style/PlantMateFilterChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/admin_filter_resolved" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/adminFilterDismissed"
+                    style="@style/PlantMateFilterChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/admin_filter_dismissed" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/adminFilterAll"
+                    style="@style/PlantMateFilterChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/admin_filter_all" />
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/adminListRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingStart="20dp"
+                android:paddingTop="14dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="96dp"
+                android:visibility="gone" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/adminListLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                app:indicatorColor="@color/color_success"
+                app:trackColor="@color/color_primary_tint" />
+
+            <LinearLayout
+                android:id="@+id/adminListEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingStart="32dp"
+                android:paddingTop="24dp"
+                android:paddingEnd="32dp"
+                android:paddingBottom="24dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/adminListMam"
+                    android:layout_width="96dp"
+                    android:layout_height="137dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/avd_mam" />
+
+                <TextView
+                    android:id="@+id/adminListEmptyTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:text="@string/admin_empty_title"
+                    android:textAppearance="@style/TextAppearance.PlantMate.SectionTitle" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="@string/admin_empty_supporting"
+                    android:textAppearance="@style/TextAppearance.PlantMate.Meta" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/adminListError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="32dp"
+                android:visibility="gone">
+
+                <FrameLayout
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/bg_mint_circle">
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_refresh"
+                        app:tint="@color/color_on_primary_tint" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:text="@string/admin_load_error"
+                    android:textAppearance="@style/TextAppearance.PlantMate.CardTitle" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/adminListRetry"
+                    style="@style/Widget.PlantMate.Button.Tonal.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/action_retry" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/adminListTabs"
+            style="@style/Widget.PlantMate.BottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            app:menu="@menu/menu_admin_tabs" />
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/adminListFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="92dp"
+        android:visibility="gone"
+        app:icon="@drawable/ic_add" />
+</FrameLayout>
