@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Plant Doctor (canvas B "Bác sĩ cây"): history button, title, a black viewfinder with white corners and Mầm
+     (the chosen photo shows inside, a white line sweeps while the AI looks), "Library" and "Take photo", the plant
+     the photo belongs to, the green "Identify and diagnose" button, three photo tips, recent checks, and symptom
+     chips with Mầm's fixed care steps. -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:clipToPadding="false"
+    android:paddingBottom="@dimen/fab_bottom_clearance">
+
+    <LinearLayout
+        android:id="@+id/doctorHero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical|end"
+                android:orientation="horizontal"
+                android:paddingEnd="8dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/doctorViewHistory"
+                    style="@style/Widget.PlantMate.IconButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="@string/doctor_history_title"
+                    app:icon="@drawable/ic_history"
+                    app:iconSize="24dp"
+                    app:strokeWidth="0dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:accessibilityHeading="true"
+                android:text="@string/doctor_title"
+                android:textAppearance="@style/TextAppearance.PlantMate.Hero"
+                android:textSize="30sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/doctor_subtitle_b"
+                android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <!-- Black viewfinder -->
+        <FrameLayout
+            android:id="@+id/doctorScanFrame"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bg_viewfinder"
+            android:clickable="true"
+            android:contentDescription="@string/doctor_take_photo"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
+
+            <LinearLayout
+                android:id="@+id/doctorScanEmpty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/doctorMam"
+                    android:layout_width="64dp"
+                    android:layout_height="92dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/avd_mam" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/doctor_frame_hint"
+                    android:textAppearance="@style/TextAppearance.PlantMate.CardTitle"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/doctorImagePreview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/doctor_preview_description"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.PlantMate.Frame24" />
+
+            <!-- White corner brackets -->
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="top|start"
+                android:layout_margin="18dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_scan_corner"
+                app:tint="@color/white" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="top|end"
+                android:layout_margin="18dp"
+                android:contentDescription="@null"
+                android:rotation="90"
+                android:src="@drawable/ic_scan_corner"
+                app:tint="@color/white" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="18dp"
+                android:contentDescription="@null"
+                android:rotation="180"
+                android:src="@drawable/ic_scan_corner"
+                app:tint="@color/white" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom|start"
+                android:layout_margin="18dp"
+                android:contentDescription="@null"
+                android:rotation="270"
+                android:src="@drawable/ic_scan_corner"
+                app:tint="@color/white" />
+
+            <View
+                android:id="@+id/doctorScanLine"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="28dp"
+                android:background="@color/white"
+                android:importantForAccessibility="no"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/doctorClearImage"
+                style="@style/PlantMatePhotoButton"
+                android:layout_gravity="top|end"
+                android:layout_margin="12dp"
+                android:contentDescription="@string/doctor_clear_image"
+                android:src="@drawable/ic_close"
+                android:visibility="gone" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/doctorProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:visibility="gone"
+                app:indicatorColor="@color/white"
+                app:trackColor="@color/white_12" />
+        </FrameLayout>
+
+        <!-- Library · take photo -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/doctorChooseImage"
+                style="@style/Widget.PlantMate.Button.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="18dp"
+                android:text="@string/doctor_library"
+                app:icon="@drawable/ic_image"
+                app:iconGravity="textStart" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/doctorTakePhoto"
+                style="@style/Widget.PlantMate.Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/doctor_take_photo"
+                app:icon="@drawable/ic_camera"
+                app:iconGravity="textStart" />
+        </LinearLayout>
+
+        <!-- The plant the photo belongs to -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bg_search_soft"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_leaf"
+                app:tint="@color/color_text_primary" />
+
+            <Spinner
+                android:id="@+id/doctorPlantSpinner"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:contentDescription="@string/doctor_link_plant" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="14dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_chevron_down"
+                app:tint="@color/color_text_secondary" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/doctorAnalyze"
+            style="@style/Widget.PlantMate.Button.Green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:enabled="false"
+            android:text="@string/doctor_analyze" />
+
+        <TextView
+            android:id="@+id/doctorStateText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:accessibilityLiveRegion="polite"
+            android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+            android:textSize="13sp" />
+
+        <!-- Photo tips -->
+        <LinearLayout
+            android:id="@+id/doctorAiCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bg_panel_20"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp">
+
+            <TextView
+                style="@style/PlantMatePhotoTip"
+                android:text="@string/doctor_tip_light"
+                app:drawableTopCompat="@drawable/ic_sun" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_panel_line" />
+
+            <TextView
+                style="@style/PlantMatePhotoTip"
+                android:text="@string/doctor_tip_sharp"
+                app:drawableTopCompat="@drawable/ic_leaf" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_panel_line" />
+
+            <TextView
+                style="@style/PlantMatePhotoTip"
+                android:text="@string/doctor_tip_close"
+                app:drawableTopCompat="@drawable/ic_search" />
+        </LinearLayout>
+
+        <!-- Recent checks -->
+        <LinearLayout
+            android:id="@+id/doctorRecentSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="20dp"
+                android:paddingEnd="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:accessibilityHeading="true"
+                    android:text="@string/doctor_recent_title"
+                    android:textAppearance="@style/TextAppearance.PlantMate.SectionTitle"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/doctorRecentAll"
+                    style="@style/PlantMateSeeAll"
+                    android:text="@string/home_see_all" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/doctorRecent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp" />
+        </LinearLayout>
+
+        <!-- Symptoms -->
+        <TextView
+            android:id="@+id/doctorSymptomTitle"
+            style="@style/PlantMateSectionHeading"
+            android:layout_marginTop="28dp"
+            android:text="@string/doctor_symptoms_or" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/doctorSymptoms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:chipSpacingHorizontal="8dp"
+            app:chipSpacingVertical="4dp"
+            app:selectionRequired="true"
+            app:singleSelection="true" />
+
+        <!-- Mầm's care steps for the chosen symptom -->
+        <LinearLayout
+            android:id="@+id/doctorGuidanceCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bg_panel_20"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/doctorGuidanceBadge"
+                style="@style/Widget.PlantMate.Tag"
+                android:layout_height="26dp"
+                android:background="@drawable/bg_tag_soft"
+                android:textColor="@color/color_primary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/doctorGuidanceTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textAppearance="@style/TextAppearance.PlantMate.CardTitle"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/doctorGuidanceSteps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/doctorGuidanceWatch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_tint_panel_16"
+                android:padding="12dp"
+                android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                android:textColor="@color/color_text_primary"
+                android:textSize="13sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/doctorAskMam"
+                style="@style/Widget.PlantMate.Button.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/home_ask_mam_more"
+                app:backgroundTint="@color/color_background"
+                app:icon="@drawable/ic_mam_help"
+                app:iconGravity="textStart"
+                app:iconTint="@null" />
+
+            <TextView
+                android:id="@+id/doctorBubble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/mam_disclaimer"
+                android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
