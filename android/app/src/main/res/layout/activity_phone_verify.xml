@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phone check (demo, trust canvas 2): number, on-screen code, confirm. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/phoneRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="24dp">
+
+        <LinearLayout
+            android:id="@+id/phoneHero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="8dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/phoneBack"
+                style="@style/Widget.PlantMate.IconButton.Hero"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="@string/action_back"
+                app:icon="@drawable/ic_arrow_back" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:accessibilityHeading="true"
+                android:text="@string/phone_title"
+                android:textAppearance="@style/TextAppearance.PlantMate.ScreenTitle"
+                android:textSize="22sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/phone_intro"
+            android:textAppearance="@style/TextAppearance.PlantMate.Body"
+            android:textColor="@color/color_text_secondary"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/phone_number_label"
+            android:textAppearance="@style/TextAppearance.PlantMate.Label"
+            android:textColor="@color/color_text_primary"
+            android:textSize="14sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneNumberLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="20dp"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="phone"
+                android:hint="@string/phone_number_hint"
+                android:inputType="phone"
+                android:minHeight="52dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.PlantMate.Body"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/phoneSend"
+            style="@style/Widget.PlantMate.Button.Outlined"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/phone_send" />
+
+        <TextView
+            android:id="@+id/phoneDemoCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="20dp"
+            android:accessibilityLiveRegion="polite"
+            android:background="@drawable/bg_stat_tile"
+            android:backgroundTint="@color/type_trade_soft"
+            android:padding="14dp"
+            android:textAppearance="@style/TextAppearance.PlantMate.Label"
+            android:textColor="@color/color_text_primary"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneCodeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="20dp"
+            android:visibility="gone"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="smsOTPCode"
+                android:fontFeatureSettings="tnum"
+                android:gravity="center"
+                android:hint="@string/phone_code_hint"
+                android:inputType="number"
+                android:letterSpacing="0.6"
+                android:maxLength="6"
+                android:minHeight="56dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.PlantMate.Label"
+                android:textSize="22sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/phoneConfirm"
+            style="@style/Widget.PlantMate.Button"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/phone_confirm"
+            android:visibility="gone" />
+    </LinearLayout>
+</ScrollView>

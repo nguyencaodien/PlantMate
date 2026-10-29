@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Primary button (canvas B .btn): ink fill. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false" android:color="@color/color_panel" />
+    <item android:color="@color/color_text_primary" />
+</selector>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Legend swatch with the same icon as the heatmap cell (icon style 1). -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:width="14dp" android:height="14dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/care_water" />
+            <corners android:radius="4dp" />
+        </shape>
+    </item>
+    <item android:width="10dp" android:height="10dp" android:left="2dp" android:top="2dp" android:drawable="@drawable/ic_care_drop" />
+</layer-list>

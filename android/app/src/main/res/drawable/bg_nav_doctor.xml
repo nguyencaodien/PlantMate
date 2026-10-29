@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Raised Doctor button: ink disc ringed by the bar colour so it reads as lifted. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="@color/nav_doctor_bg" />
+    <stroke android:width="5dp" android:color="@color/nav_surface" />
+</shape>

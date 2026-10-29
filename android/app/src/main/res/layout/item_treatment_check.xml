@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One treatment step the member can tick off (canvas B): a square box, the step, and a "Done" tag once ticked.
+     A done step keeps its words readable; it is never struck through. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_top_hairline_transparent"
+    android:gravity="center_vertical"
+    android:minHeight="56dp"
+    android:orientation="horizontal"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp">
+
+    <CheckBox
+        android:id="@+id/treatmentCheck"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minHeight="32dp"
+        android:paddingStart="10dp"
+        android:textAppearance="@style/TextAppearance.PlantMate.Body"
+        android:textColor="@color/color_text_primary"
+        android:textSize="15sp"
+        app:buttonTint="@color/treatment_box" />
+
+    <TextView
+        android:id="@+id/treatmentDone"
+        style="@style/Widget.PlantMate.Tag"
+        android:layout_height="24dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/bg_tag_soft"
+        android:paddingStart="9dp"
+        android:paddingEnd="9dp"
+        android:text="@string/doctor_result_step_done"
+        android:textColor="@color/color_primary"
+        android:textSize="12sp"
+        android:visibility="gone" />
+</LinearLayout>

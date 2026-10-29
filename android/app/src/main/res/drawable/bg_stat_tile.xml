@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- White stat tile with a hairline border (Leafy style). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/color_surface" />
+    <stroke android:width="1dp" android:color="@color/color_border" />
+    <corners android:radius="18dp" />
+</shape>

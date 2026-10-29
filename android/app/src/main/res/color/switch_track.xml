@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Switch track (canvas B): green when on, grey when off. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true" android:color="@color/color_primary" />
+    <item android:color="@color/color_panel_line" />
+</selector>

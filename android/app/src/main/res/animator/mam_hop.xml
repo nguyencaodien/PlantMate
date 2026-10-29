@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- pmHop: hop 8 with squash (1.04, 0.96) and stretch (0.97, 1.03). -->
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="2400"
+    android:repeatCount="infinite">
+        <propertyValuesHolder android:propertyName="translateY" android:valueType="floatType">
+            <keyframe android:fraction="0" android:value="0" />
+            <keyframe android:fraction="0.45" android:value="-8" android:interpolator="@interpolator/pm_hop" />
+            <keyframe android:fraction="0.6" android:value="-8" android:interpolator="@interpolator/pm_hop" />
+            <keyframe android:fraction="1" android:value="0" android:interpolator="@interpolator/pm_hop" />
+        </propertyValuesHolder>
+        <propertyValuesHolder android:propertyName="scaleX" android:valueType="floatType">
+            <keyframe android:fraction="0" android:value="1.04" />
+            <keyframe android:fraction="0.45" android:value="0.97" android:interpolator="@interpolator/pm_hop" />
+            <keyframe android:fraction="0.6" android:value="0.98" android:interpolator="@interpolator/pm_hop" />
+            <keyframe android:fraction="1" android:value="1.04" android:interpolator="@interpolator/pm_hop" />
+        </propertyValuesHolder>
+        <propertyValuesHolder android:propertyName="scaleY" android:valueType="floatType">
+            <keyframe android:fraction="0" android:value="0.96" />
+            <keyframe android:fraction="0.45" android:value="1.03" android:interpolator="@interpolator/pm_hop" />
+            <keyframe android:fraction="0.6" android:value="1.02" android:interpolator="@interpolator/pm_hop" />
+            <keyframe android:fraction="1" android:value="0.96" android:interpolator="@interpolator/pm_hop" />
+        </propertyValuesHolder>
+</objectAnimator>

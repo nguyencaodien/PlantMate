@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "View 3 replies" under a comment whose replies are collapsed (comments option A). -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/commentMore"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="46dp"
+    android:background="?attr/selectableItemBackground"
+    android:drawablePadding="6dp"
+    android:gravity="center_vertical"
+    android:minHeight="40dp"
+    android:paddingStart="4dp"
+    android:paddingEnd="12dp"
+    android:textAppearance="@style/TextAppearance.PlantMate.Label"
+    android:textColor="@color/color_text_secondary"
+    android:textSize="13sp"
+    app:drawableStartCompat="@drawable/ic_chevron_down_16"
+    app:drawableTint="@color/color_text_secondary" />

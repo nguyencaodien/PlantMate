@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Plant Doctor viewfinder (canvas B): ink block, 24dp corners. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/nav_capsule" />
+    <corners android:radius="24dp" />
+</shape>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A row in the sort menu: light green when chosen, ripple when pressed. -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="@color/color_panel_line">
+    <item>
+        <selector>
+            <item android:state_selected="true">
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/notif_unread_bg" />
+                    <corners android:radius="12dp" />
+                </shape>
+            </item>
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@android:color/transparent" />
+                    <corners android:radius="12dp" />
+                </shape>
+            </item>
+        </selector>
+    </item>
+</ripple>

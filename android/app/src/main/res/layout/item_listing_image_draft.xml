@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One listing photo: rounded, with a small remove button; the form marks the first as the cover. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="74dp"
+    android:layout_height="74dp"
+    android:layout_marginEnd="10dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/listing_draft_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_brand_surface"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.PlantMate.Frame16" />
+
+    <TextView
+        android:id="@+id/listing_draft_cover"
+        style="@style/Widget.PlantMate.Tag"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="8dp"
+        android:background="@drawable/bg_pill_white"
+        android:text="@string/listing_cover_badge"
+        android:textColor="@color/photo_button_ink"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/listing_draft_remove"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="-8dp"
+        android:layout_marginEnd="-8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:contentDescription="@string/listing_remove_photo"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_remove_badge"
+            android:contentDescription="@null"
+            android:padding="5dp"
+            android:src="@drawable/ic_close"
+            app:tint="@android:color/white" />
+    </FrameLayout>
+</FrameLayout>

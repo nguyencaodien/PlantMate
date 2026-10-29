@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- View tag: the avatar ref a round avatar view is currently bound to. -->
+    <item name="avatar_ref_tag" type="id" />
+</resources>

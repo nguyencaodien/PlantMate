@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Unread notification row: light green fill, rounded ripple. -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="@color/color_panel_line">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/notif_unread_bg" />
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+</ripple>

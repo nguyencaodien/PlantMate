@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Text field outline (canvas B): none at rest on the grey fill, 2dp ink while typing. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true" android:color="@color/color_text_primary" />
+    <item android:color="@android:color/transparent" />
+</selector>

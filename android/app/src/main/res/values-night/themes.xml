@@ -1,0 +1,7 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Colours come from values-night/colors.xml; only system-bar icon contrast differs at night. -->
+    <style name="Theme.UngDungChiaSeCayCanh" parent="Base.Theme.UngDungChiaSeCayCanh">
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+</resources>

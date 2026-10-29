@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Safety reminder at the end of a conversation (canvas B): one muted centred line with a shield. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="16dp"
+    android:paddingBottom="6dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:drawablePadding="6dp"
+        android:gravity="center_vertical"
+        android:text="@string/chat_safety_note"
+        android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+        android:textSize="13sp"
+        app:drawableStartCompat="@drawable/ic_shield_14"
+        app:drawableTint="@color/color_text_secondary" />
+</FrameLayout>

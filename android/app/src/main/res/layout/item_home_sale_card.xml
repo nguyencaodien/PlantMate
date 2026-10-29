@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "Good prices for sale" card (canvas B): 200dp wide, 150dp photo, price first, then name, area
+     and the sale status pill. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="12dp"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/sale_card_photo"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/bg_panel_16"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.PlantMate.Frame16" />
+
+    <TextView
+        android:id="@+id/sale_card_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFeatureSettings="tnum"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.PlantMate.SectionTitle"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/sale_card_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.PlantMate.Body"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/sale_card_meta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/sale_card_status"
+        style="@style/Widget.PlantMate.SaleStatus"
+        android:layout_marginTop="6dp" />
+</LinearLayout>

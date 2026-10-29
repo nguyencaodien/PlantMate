@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Composer / post screen ground: soft lime at the top fading into paper (design's wash). -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <color android:color="@color/color_background" />
+    </item>
+    <item android:gravity="top" android:height="280dp">
+        <shape android:shape="rectangle">
+            <gradient android:angle="270" android:startColor="@color/color_hero_top"
+                android:endColor="@color/color_background" />
+        </shape>
+    </item>
+</layer-list>

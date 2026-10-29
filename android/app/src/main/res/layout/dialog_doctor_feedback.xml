@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "Not right" feedback: what it really was (optional) and whether to share the photo. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="24dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="24dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/doctorFeedbackCorrectionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/doctor_feedback_correction_hint"
+        app:helperText="@string/doctor_feedback_optional"
+        app:counterEnabled="true"
+        app:counterMaxLength="300">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/doctorFeedbackCorrection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLength="300"
+            android:maxLines="4"
+            android:textAppearance="@style/TextAppearance.PlantMate.Body" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/doctorFeedbackSharePhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:minHeight="48dp"
+        android:text="@string/doctor_feedback_share_photo"
+        android:textAppearance="@style/TextAppearance.PlantMate.Body" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/doctor_feedback_share_note"
+        android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+        android:textColor="@color/color_text_secondary"
+        android:textSize="13sp" />
+</LinearLayout>

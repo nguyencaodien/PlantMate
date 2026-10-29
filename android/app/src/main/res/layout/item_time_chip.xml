@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One daily watering time in the plant form: tap to change it, × to remove it. -->
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Material3.Chip.Input"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:checkable="false"
+    android:textAppearance="@style/TextAppearance.PlantMate.Label"
+    android:textColor="@color/color_text_primary"
+    app:chipBackgroundColor="@color/color_primary_tint"
+    app:chipIcon="@drawable/ic_bell"
+    app:chipIconTint="@color/color_on_primary_tint"
+    app:chipIconVisible="true"
+    app:chipStrokeWidth="0dp"
+    app:closeIconTint="@color/color_text_secondary"
+    app:closeIconVisible="true" />

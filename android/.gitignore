@@ -1,0 +1,9 @@
+# Android subproject generated files and machine-specific config
+**/build/
+.gradle/
+.idea/
+local.properties
+keystore.properties
+*.jks
+*.keystore
+google-services.json

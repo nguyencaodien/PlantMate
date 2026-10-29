@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Filled rating star, 14dp. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="14dp"
+    android:height="14dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path android:fillColor="#FF000000"
+        android:pathData="M12,3l2.7,5.6 6.1,0.9 -4.4,4.3 1,6.1L12,17l-5.4,2.9 1,-6.1L3.2,9.5l6.1,-0.9z" />
+</vector>

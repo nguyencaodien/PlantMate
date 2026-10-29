@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Sign-in brand block: fades the photo columns into the deep green at the bottom edge. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient android:angle="90" android:startColor="@color/launcher_background"
+        android:endColor="#00101D14" />
+</shape>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Small arrow (16dp, "See all" links). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="16dp" android:height="16dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+    <path android:fillColor="#00000000" android:strokeColor="#FF000000" android:strokeWidth="2"
+        android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M5,12h14M13,6l6,6l-6,6" />
+</vector>

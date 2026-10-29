@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Member profile identity card (canvas D): ink, 22dp corners. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/member_hero_bg" />
+    <corners android:radius="22dp" />
+</shape>

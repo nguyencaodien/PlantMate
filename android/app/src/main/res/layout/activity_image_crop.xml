@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Photo editor between picking and using a photo: dark in both themes so the photo stands out. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cropRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/crop_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="16dp">
+
+        <ImageButton
+            android:id="@+id/cropClose"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/crop_close"
+            android:src="@drawable/ic_close"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/cropTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:accessibilityHeading="true"
+            android:text="@string/crop_title"
+            android:textAppearance="@style/TextAppearance.PlantMate.Label"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.example.ungdungchiasecaycanh.ui.photo.CropImageView
+            android:id="@+id/cropView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/crop_area_desc" />
+
+        <ProgressBar
+            android:id="@+id/cropProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/white"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:text="@string/crop_hint"
+        android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+        android:textColor="@color/crop_hint"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="20dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cropReset"
+            style="@style/Widget.PlantMate.Button.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:text="@string/crop_reset"
+            android:textColor="@color/white"
+            app:strokeColor="@color/crop_hint" />
+
+        <Space
+            android:layout_width="12dp"
+            android:layout_height="0dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cropUse"
+            style="@style/Widget.PlantMate.Button"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1.4"
+            android:text="@string/crop_use"
+            app:icon="@drawable/ic_check"
+            app:iconGravity="textStart" />
+    </LinearLayout>
+</LinearLayout>

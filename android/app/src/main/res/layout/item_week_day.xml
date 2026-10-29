@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One day of the Garden week (approved canvas option J, 2026-10-16): the short day name over one dot.
+     GardenFragment fills the dot: hollow grey = no care, solid green = care planned, green ring = all done. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center"
+    android:minHeight="48dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/weekDayName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/weekDayDot"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="7dp" />
+</LinearLayout>

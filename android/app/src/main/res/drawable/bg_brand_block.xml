@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Sign-in brand block: the logo's deep green. Uniform corners so the outline can clip; the block starts above
+     the screen, so only the bottom corners show. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/launcher_background" />
+    <corners android:radius="36dp" />
+</shape>

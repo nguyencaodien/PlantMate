@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PlantMate tokens (dark), canvas B (2026-10-14): near-black ground, leaf green #63C98E for actions. -->
+    <color name="color_background">#FF0E100F</color>
+    <color name="color_surface">#FF171917</color>
+    <color name="color_chip_surface">#FF191C1A</color>
+    <color name="color_brand_surface">#FF16281D</color>
+    <color name="color_primary">#FF63C98E</color>
+    <color name="color_on_primary">#FF0B1F12</color>
+    <color name="color_primary_tint">#FF16281D</color>
+    <color name="color_on_primary_tint">#FFCDEBD7</color>
+    <color name="color_accent">#FF63C98E</color>
+    <color name="color_on_accent">#FF0B1F12</color>
+    <color name="color_success">#FF63C98E</color>
+    <color name="color_on_dark_muted">#FFA9B3AD</color>
+    <color name="color_text_primary">#FFEEF1EE</color>
+    <color name="color_text_secondary">#FFA1A8A3</color>
+    <color name="color_border">#FF2A2E2B</color>
+    <color name="color_avatar_neutral">#FF2A2E2B</color>
+    <color name="color_dash">#FF4A4D4A</color>
+    <color name="week_bar_low">#FF2E4A39</color>
+    <color name="color_input_border">#FF4A4D4A</color>
+    <color name="color_muted_divider">#FF3A3D3A</color>
+    <color name="color_give_away">#FF63C98E</color>
+    <color name="color_give_away_tint">#FF1F7A45</color>
+    <color name="color_trade">#FFCDEBD7</color>
+    <color name="color_trade_tint">#FF16281D</color>
+    <color name="color_sell_tint">#FF262826</color>
+    <color name="color_danger">#FFF2B8B5</color>
+    <color name="color_water_due">#FF63C98E</color>
+    <color name="color_water_due_tint">#FF16281D</color>
+    <color name="color_like">#FFF2B8B5</color>
+    <color name="color_ripple">#29FFFFFF</color>
+    <!-- Icon on the primary button: white on green (light), dark green on leaf green (dark). -->
+    <color name="color_primary_button_icon">@color/color_on_primary</color>
+    <!-- Review stars -->
+    <color name="color_star">#FFF2C14E</color>
+    <!-- Admin chart series (validated palette, fixed order) -->
+    <color name="chart_series_1">#FF16A34A</color>
+    <color name="chart_series_2">#FF3B82F6</color>
+    <color name="chart_series_3">#FFD97706</color>
+    <color name="type_trade_soft">#FF16281D</color>
+    <color name="type_trade_ink">#FFCDEBD7</color>
+    <color name="type_sell_soft">#FF262826</color>
+    <color name="type_sell_ink">#FFEEF1EE</color>
+    <color name="chart_series_4">#FFEC4899</color>
+    <color name="chart_series_5">#FF0891B2</color>
+    <color name="chart_neutral">#FF64748B</color>
+    <color name="color_forest">#FF1F7A45</color>
+    <color name="color_hero_top">#FF0E100F</color>
+    <color name="color_hero_text">#FFEEF1EE</color>
+    <color name="color_hero_text_muted">#FFA1A8A3</color>
+    <color name="color_tile_lavender">#FF16281D</color>
+    <color name="color_tile_lavender_ink">#FF63C98E</color>
+    <color name="color_leaf">#FF000000</color>
+    <color name="color_on_leaf_muted">#FFBDBDBD</color>
+    <color name="color_leaf_row">#FF1A1A1A</color>
+    <color name="nav_capsule">#FF1F2320</color>
+    <color name="color_panel">#FF191C1A</color>
+    <color name="color_panel_line">#FF232724</color>
+    <color name="color_rank_panel">#FF1E3A29</color>
+    <color name="rank_track">#29FFFFFF</color>
+    <color name="sale_available_bg">#FF1C3A28</color>
+    <color name="sale_available_fg">#FF8FD9A8</color>
+    <color name="sale_reserved_bg">#FF3D2E0A</color>
+    <color name="sale_reserved_fg">#FFF2C94C</color>
+    <color name="sale_sold_bg">#FF2A322D</color>
+    <color name="sale_sold_fg">#FFB5C0B8</color>
+    <color name="color_garden_track">#FF2A3D31</color>
+    <color name="owner_card_bg">#FF1B4A30</color>
+    <color name="owner_card_ink">#FF12301F</color>
+    <color name="notif_unread_bg">#FF16281D</color>
+    <!-- The ink card stays a shade lighter than the dark page. -->
+    <color name="member_hero_bg">#FF1E2420</color>
+    <color name="admin_page_glow">#FF1C3A27</color>
+    <color name="admin_cell">#FF171D19</color>
+    <color name="admin_highlight">#00000000</color>
+    <color name="nav_active_ink">#FFC5F04A</color>
+    <color name="nav_inactive">#FF9AA8A0</color>
+    <color name="nav_surface">#FF171A18</color>
+    <color name="nav_line">#FF262B28</color>
+    <color name="nav_doctor_bg">#FFC5F04A</color>
+    <color name="nav_doctor_icon">#FF0A3622</color>
+    <color name="admin_page">#FF0E100F</color>
+</resources>

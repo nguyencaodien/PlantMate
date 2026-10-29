@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "Quản trị" pill in the admin member list: ink with lime text (lime with dark text at night). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/nav_doctor_bg" />
+    <corners android:radius="999dp" />
+</shape>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Lime camera badge on the edit-profile avatar, ringed with the surface colour. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="@color/color_accent" />
+    <stroke android:width="3dp" android:color="@color/color_surface" />
+</shape>

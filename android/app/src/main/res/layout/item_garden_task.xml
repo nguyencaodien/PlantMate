@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One care row on the Garden day panel (canvas B): photo, task, time or area, and on the right the white
+     "Water" button (fills with green when pressed), a time, or a green check when done. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:minHeight="68dp"
+    android:orientation="horizontal">
+
+    <FrameLayout
+        android:id="@+id/taskPhotoFrame"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_task_photo">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_leaf"
+            app:tint="@color/color_primary" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/taskPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.PlantMate.Frame12" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/taskTexts"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/taskTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.PlantMate.CardTitle"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/taskSub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/taskWater"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_water_button"
+        android:drawablePadding="6dp"
+        android:gravity="center"
+        android:minWidth="72dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="14dp"
+        android:text="@string/garden_task_water_action"
+        android:textAppearance="@style/TextAppearance.PlantMate.Label"
+        android:textColor="@color/color_text_primary"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:drawableStartCompat="@drawable/ic_water_drop_small"
+        app:drawableTint="@color/color_text_primary" />
+
+    <TextView
+        android:id="@+id/taskTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFeatureSettings="tnum"
+        android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/taskDone"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_task_done"
+        android:contentDescription="@string/garden_task_done_label"
+        android:padding="10dp"
+        android:src="@drawable/ic_check"
+        android:visibility="gone"
+        app:tint="@color/color_on_primary" />
+</LinearLayout>

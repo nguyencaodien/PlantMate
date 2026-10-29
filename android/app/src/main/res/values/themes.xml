@@ -1,0 +1,94 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme: every Material 3 colour role is mapped to a Leaf System token. -->
+    <style name="Base.Theme.UngDungChiaSeCayCanh" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:textViewStyle">@style/Widget.PlantMate.TextView</item>
+        <!-- Text keeps the font's own leading (room for Vietnamese marks); only a view's explicit lineHeight applies. -->
+        <item name="textAppearanceLineHeightEnabled">false</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.PlantMate.M3.DisplaySmall</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.PlantMate.M3.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.PlantMate.M3.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.PlantMate.M3.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.PlantMate.M3.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.PlantMate.M3.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.PlantMate.M3.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.PlantMate.M3.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.PlantMate.M3.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.PlantMate.M3.BodySmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.PlantMate.M3.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.PlantMate.M3.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.PlantMate.M3.LabelSmall</item>
+        <item name="editTextStyle">@style/Widget.PlantMate.EditText</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorOnPrimary">@color/color_on_primary</item>
+        <item name="colorPrimaryContainer">@color/color_primary_tint</item>
+        <item name="colorOnPrimaryContainer">@color/color_on_primary_tint</item>
+        <item name="colorPrimaryInverse">@color/color_primary_tint</item>
+        <item name="colorSecondary">@color/color_primary</item>
+        <item name="colorOnSecondary">@color/color_on_primary</item>
+        <item name="colorSecondaryContainer">@color/color_primary_tint</item>
+        <item name="colorOnSecondaryContainer">@color/color_on_primary_tint</item>
+        <item name="colorTertiary">@color/color_trade</item>
+        <item name="colorOnTertiary">@color/color_surface</item>
+        <item name="colorTertiaryContainer">@color/color_trade_tint</item>
+        <item name="colorOnTertiaryContainer">@color/color_trade</item>
+        <item name="colorError">@color/color_danger</item>
+        <item name="colorOnError">@color/color_surface</item>
+        <item name="colorErrorContainer">@color/color_sell_tint</item>
+        <item name="colorOnErrorContainer">@color/color_danger</item>
+        <item name="android:colorBackground">@color/color_background</item>
+        <item name="colorOnBackground">@color/color_text_primary</item>
+        <item name="colorSurface">@color/color_surface</item>
+        <item name="colorOnSurface">@color/color_text_primary</item>
+        <item name="colorSurfaceVariant">@color/color_chip_surface</item>
+        <item name="colorOnSurfaceVariant">@color/color_text_secondary</item>
+        <item name="colorSurfaceInverse">@color/color_text_primary</item>
+        <item name="colorOnSurfaceInverse">@color/color_background</item>
+        <item name="colorSurfaceBright">@color/color_surface</item>
+        <item name="colorSurfaceDim">@color/color_chip_surface</item>
+        <item name="colorSurfaceContainerLowest">@color/color_surface</item>
+        <item name="colorSurfaceContainerLow">@color/color_surface</item>
+        <item name="colorSurfaceContainer">@color/color_surface</item>
+        <item name="colorSurfaceContainerHigh">@color/color_surface</item>
+        <item name="colorSurfaceContainerHighest">@color/color_chip_surface</item>
+        <item name="colorOutline">@color/color_input_border</item>
+        <item name="colorOutlineVariant">@color/color_border</item>
+        <item name="elevationOverlayEnabled">false</item>
+        <item name="colorControlHighlight">@color/color_ripple</item>
+        <item name="android:statusBarColor">@color/color_background</item>
+        <item name="android:navigationBarColor">@color/color_surface</item>
+        <item name="materialButtonStyle">@style/Widget.PlantMate.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.PlantMate.Button.Outlined</item>
+        <item name="borderlessButtonStyle">@style/Widget.PlantMate.Button.Text</item>
+        <item name="textInputStyle">@style/Widget.PlantMate.TextInputLayout</item>
+        <item name="materialCardViewStyle">@style/Widget.PlantMate.Card</item>
+        <item name="chipStyle">@style/PlantMateFilterChip</item>
+        <item name="floatingActionButtonStyle">@style/Widget.PlantMate.Fab</item>
+        <item name="extendedFloatingActionButtonStyle">@style/Widget.PlantMate.ExtendedFab</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.PlantMate.BottomSheet</item>
+        <item name="shapeAppearanceCornerSmall">@style/ShapeAppearance.PlantMate.Control</item>
+        <item name="shapeAppearanceCornerMedium">@style/ShapeAppearance.PlantMate.Control</item>
+        <item name="shapeAppearanceCornerLarge">@style/ShapeAppearance.PlantMate.Card</item>
+    </style>
+
+    <style name="Theme.UngDungChiaSeCayCanh" parent="Base.Theme.UngDungChiaSeCayCanh">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+    <!-- Plant Doctor camera: black, light system bar icons. -->
+    <style name="Theme.PlantMate.Camera" parent="Base.Theme.UngDungChiaSeCayCanh">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+    <style name="ThemeOverlay.PlantMate.BottomSheet" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.PlantMate.BottomSheet</item>
+    </style>
+    <!-- Launch screen: the logo's deep green, so the icon, the system window and the launch screen match. -->
+    <style name="Theme.PlantMate.Launch" parent="Theme.UngDungChiaSeCayCanh">
+        <item name="android:windowBackground">@color/launcher_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+</resources>

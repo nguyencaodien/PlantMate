@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- pmWave: a wave, then rest, every 2.4 s. -->
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="2400"
+    android:startOffset="600"
+    android:repeatCount="infinite">
+        <propertyValuesHolder android:propertyName="rotation" android:valueType="floatType">
+            <keyframe android:fraction="0" android:value="0" />
+            <keyframe android:fraction="0.15" android:value="-24" android:interpolator="@interpolator/pm_ease_in_out" />
+            <keyframe android:fraction="0.3" android:value="12" android:interpolator="@interpolator/pm_ease_in_out" />
+            <keyframe android:fraction="0.45" android:value="-18" android:interpolator="@interpolator/pm_ease_in_out" />
+            <keyframe android:fraction="0.6" android:value="0" android:interpolator="@interpolator/pm_ease_in_out" />
+            <keyframe android:fraction="1" android:value="0" android:interpolator="@interpolator/pm_ease_in_out" />
+        </propertyValuesHolder>
+</objectAnimator>

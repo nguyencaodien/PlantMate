@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chip outline: hairline, ink when chosen. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true" android:color="@color/color_text_primary" />
+    <item android:color="@color/color_border" />
+</selector>

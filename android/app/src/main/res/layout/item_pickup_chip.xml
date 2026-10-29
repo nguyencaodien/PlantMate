@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A time the owner is free, on the pick-up panel (canvas B): hairline pill. -->
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Material3.Chip.Assist"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="false"
+    android:textAppearance="@style/TextAppearance.PlantMate.ChipLabel"
+    android:textColor="@color/color_text_primary"
+    android:textSize="13sp"
+    app:chipBackgroundColor="@color/color_background"
+    app:chipCornerRadius="17dp"
+    app:chipIcon="@drawable/ic_clock_15"
+    app:chipIconSize="14dp"
+    app:chipIconTint="@color/color_text_primary"
+    app:chipMinHeight="34dp"
+    app:chipStrokeColor="@color/color_border"
+    app:chipStrokeWidth="1dp"
+    app:ensureMinTouchTargetSize="false" />

@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Public member profile, Vivid Green: identity, stats, trust level with stars, and tabs for
+     their listings, community posts and received reviews. Reloaded by uid. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/memberRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/memberContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="28dp">
+
+                <!-- Top bar -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/memberBack"
+                        style="@style/Widget.PlantMate.IconButton.Hero"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center_vertical|start"
+                        android:contentDescription="@string/action_back"
+                        app:icon="@drawable/ic_arrow_back" />
+
+                </FrameLayout>
+
+                <!-- Identity card (member profile canvas D): ink card, lime accents, trust ring top right. -->
+                <LinearLayout
+                    android:id="@+id/memberHero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/bg_member_hero"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/memberAvatar"
+                            android:layout_width="72dp"
+                            android:layout_height="72dp"
+                            android:background="@drawable/bg_avatar_lime_ring"
+                            android:gravity="center"
+                            android:importantForAccessibility="no"
+                            android:textAppearance="@style/TextAppearance.PlantMate.SectionTitle"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="24sp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/memberName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:textAppearance="@style/TextAppearance.PlantMate.ScreenTitle"
+                                android:textColor="@color/white"
+                                android:textSize="21sp" />
+
+                            <TextView
+                                android:id="@+id/memberLocation"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:drawablePadding="4dp"
+                                android:gravity="center_vertical"
+                                android:textAppearance="@style/TextAppearance.PlantMate.Label"
+                                android:textColor="@color/member_hero_muted"
+                                android:textSize="13sp"
+                                app:drawableStartCompat="@drawable/ic_location_small"
+                                app:drawableTint="@color/member_hero_muted" />
+                        </LinearLayout>
+
+                        <!-- Trust score ring -->
+                        <LinearLayout
+                            android:id="@+id/memberTrustRing"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <FrameLayout
+                                android:layout_width="56dp"
+                                android:layout_height="56dp">
+
+                                <com.google.android.material.progressindicator.CircularProgressIndicator
+                                    android:id="@+id/memberTrustProgress"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:max="100"
+                                    app:indicatorColor="@color/brand_lime"
+                                    app:indicatorSize="56dp"
+                                    app:trackColor="@color/member_hero_track"
+                                    app:trackCornerRadius="3dp"
+                                    app:trackThickness="5dp" />
+
+                                <TextView
+                                    android:id="@+id/memberTrustScore"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFeatureSettings="tnum"
+                                    android:textAppearance="@style/TextAppearance.PlantMate.CardTitle"
+                                    android:textColor="@color/white"
+                                    android:textSize="17sp" />
+                            </FrameLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="@string/member_trust_short"
+                                android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                                android:textColor="@color/member_hero_muted"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Verification badges: lime when done, dashed when not -->
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        app:chipSpacingHorizontal="6dp"
+                        app:chipSpacingVertical="6dp">
+
+                        <TextView android:id="@+id/memberBadgeEmail" style="@style/PlantMateMemberBadge" android:text="@string/owner_badge_email" />
+                        <TextView android:id="@+id/memberBadgePhone" style="@style/PlantMateMemberBadge" android:text="@string/owner_badge_phone" />
+                        <TextView android:id="@+id/memberBadgeVneid" style="@style/PlantMateMemberBadge" android:text="@string/owner_badge_vneid" />
+                    </com.google.android.material.chip.ChipGroup>
+
+                    <TextView
+                        android:id="@+id/memberBio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textAppearance="@style/TextAppearance.PlantMate.Body"
+                        android:textColor="@color/member_hero_text"
+                        android:textSize="14sp"
+                        android:textStyle="italic" />
+
+                    <!-- Stats in one row with thin dividers -->
+                    <LinearLayout
+                        android:id="@+id/memberStats"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:baselineAligned="false"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout style="@style/Widget.PlantMate.MemberStat" android:gravity="center">
+                            <TextView android:id="@+id/memberStatListings" style="@style/Widget.PlantMate.MemberStatValue" android:textColor="@color/white" />
+                            <TextView style="@style/Widget.PlantMate.MemberStatLabel" android:text="@string/member_stat_listings" android:textColor="@color/member_hero_muted" android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <View android:layout_width="1dp" android:layout_height="28dp" android:background="@color/member_hero_line" />
+
+                        <LinearLayout style="@style/Widget.PlantMate.MemberStat" android:gravity="center">
+                            <TextView android:id="@+id/memberStatRehomed" style="@style/Widget.PlantMate.MemberStatValue" android:textColor="@color/white" />
+                            <TextView style="@style/Widget.PlantMate.MemberStatLabel" android:text="@string/profile_stat_rehomed_label" android:textColor="@color/member_hero_muted" android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <View android:layout_width="1dp" android:layout_height="28dp" android:background="@color/member_hero_line" />
+
+                        <LinearLayout style="@style/Widget.PlantMate.MemberStat" android:gravity="center">
+                            <TextView android:id="@+id/memberStatRating" style="@style/Widget.PlantMate.MemberStatValue" android:textColor="@color/white" />
+                            <TextView android:id="@+id/memberStatRatingLabel" style="@style/Widget.PlantMate.MemberStatLabel" android:textColor="@color/member_hero_muted" android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Friend state (outlined) and Message (lime), side by side, one line each. -->
+                    <LinearLayout
+                        android:id="@+id/memberActions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <!-- Add friend / Invited / Accept / Friends -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/memberFriend"
+                            style="@style/Widget.PlantMate.Button.Outlined"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@string/friend_add"
+                            android:textColor="@color/white"
+                            app:icon="@drawable/ic_users"
+                            app:iconGravity="textStart"
+                            app:iconSize="18dp"
+                            app:iconTint="@color/white"
+                            app:strokeColor="@color/member_hero_outline"
+                            app:strokeWidth="1.5dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/memberMessage"
+                            style="@style/Widget.PlantMate.Button"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:maxLines="1"
+                            android:text="@string/member_message"
+                            android:textColor="@color/brand_forest"
+                            app:backgroundTint="@color/brand_lime"
+                            app:icon="@drawable/ic_chat"
+                            app:iconGravity="textStart"
+                            app:iconSize="18dp"
+                            app:iconTint="@color/brand_forest" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- One line of advice from the trust level (the score is the ring above). -->
+                <LinearLayout
+                    android:id="@+id/memberTrustCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/bg_member_tip"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="14dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="12dp">
+
+                    <ImageView
+                        android:id="@+id/memberTrustIcon"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_leaf"
+                        app:tint="@color/color_success" />
+
+                    <TextView
+                        android:id="@+id/memberTrustDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:textAppearance="@style/TextAppearance.PlantMate.Body"
+                        android:textColor="@color/color_text_primary"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/memberTabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@android:color/transparent"
+                    android:paddingStart="8dp"
+                    app:tabGravity="start"
+                    app:tabIndicatorColor="@color/color_primary"
+                    app:tabIndicatorFullWidth="true"
+                    app:tabIndicatorHeight="3dp"
+                    app:tabMode="scrollable"
+                    app:tabRippleColor="@color/color_ripple"
+                    app:tabSelectedTextColor="@color/color_text_primary"
+                    app:tabTextAppearance="@style/TextAppearance.PlantMate.Tab"
+                    app:tabTextColor="@color/color_text_secondary" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_border" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/memberListings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:paddingStart="14dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="14dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/memberPosts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:paddingTop="8dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/memberReviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:paddingStart="20dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="20dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/memberEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="32dp"
+                    android:textAppearance="@style/TextAppearance.PlantMate.Body"
+                    android:textColor="@color/color_text_secondary"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/memberLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            app:indicatorColor="@color/color_success"
+            app:trackColor="@color/color_primary_tint" />
+
+        <LinearLayout
+            android:id="@+id/memberError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/memberErrorText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.PlantMate.Body" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/memberRetry"
+                style="@style/Widget.PlantMate.Button.Tonal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/action_retry" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/memberErrorBack"
+                style="@style/Widget.PlantMate.Button.Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_back" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

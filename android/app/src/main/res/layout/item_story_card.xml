@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One card of the Community story strip (approved canvas option C, 2026-10-16; no autoplay): a narrow
+     110×174dp story card. A story shows its photo, the author's round avatar top-left and their name on a dark
+     fade at the bottom, framed in green until opened; "New story" and "Add friends" are grey cards with a green
+     icon disc. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="110dp"
+    android:layout_height="174dp"
+    android:layout_marginEnd="8dp"
+    android:background="@drawable/bg_panel_16"
+    android:clickable="true"
+    android:clipToOutline="true"
+    android:focusable="true"
+    android:foreground="@drawable/fg_hero_card_ripple"
+    android:stateListAnimator="@animator/pm_press">
+
+    <ImageView
+        android:id="@+id/storyImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/storyFade"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bg_hero_card_fade" />
+
+    <!-- Green frame while the story is unseen -->
+    <View
+        android:id="@+id/storyRing"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_story_card_new" />
+
+    <TextView
+        android:id="@+id/storyAvatar"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="top|start"
+        android:layout_margin="8dp"
+        android:background="@drawable/bg_avatar_white_ring"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:textColor="@color/ink_on_photo"
+        android:textSize="11sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/storyLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:padding="9dp"
+        android:textAppearance="@style/TextAppearance.PlantMate.CardTitle"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/storyAction"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <FrameLayout
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_circle_primary">
+
+            <ImageView
+                android:id="@+id/storyAddIcon"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                app:tint="@color/white" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/storyActionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.PlantMate.Label"
+            android:textColor="@color/color_text_primary"
+            android:textSize="13sp" />
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Admin page: paper with a soft mint glow from the top right (admin canvas X). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient android:type="radial" android:centerX="1.0" android:centerY="0.0" android:gradientRadius="600dp"
+        android:startColor="@color/admin_page_glow" android:endColor="@color/color_background" />
+</shape>

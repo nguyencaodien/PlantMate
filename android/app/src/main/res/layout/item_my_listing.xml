@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Listing row, Vivid Green: photo on its type tint, notched tag, name, species, pick-up area. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/bg_card_20"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:stateListAnimator="@animator/pm_press">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="84dp"
+            android:layout_height="84dp">
+
+            <ImageView
+                android:id="@+id/my_listing_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_frame_give_away"
+                android:contentDescription="@string/listing_cover_photo"
+                android:padding="24dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_botanical_placeholder" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/my_listing_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/listing_cover_photo"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.PlantMate.Frame16" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/my_listing_type"
+                style="@style/Widget.PlantMate.Tag"
+                android:background="@drawable/bg_badge_give_away"
+                android:textColor="#FF0A3622" />
+
+            <TextView
+                android:id="@+id/my_listing_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.PlantMate.Display"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/my_listing_species"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.PlantMate.Species"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/my_listing_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:drawablePadding="4dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                android:textSize="13sp"
+                app:drawableStartCompat="@drawable/ic_location_small"
+                app:drawableTint="@color/color_text_secondary" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/my_listing_status"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:background="@drawable/bg_status_active"
+            android:drawablePadding="6dp"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="12dp"
+            android:textAppearance="@style/TextAppearance.PlantMate.Label"
+            android:textSize="12sp"
+            app:drawableStartCompat="@drawable/ic_status_dot" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/my_listing_manage_status"
+            style="@style/Widget.PlantMate.Button.Tonal.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_listing_manage_status"
+            app:icon="@drawable/ic_edit"
+            app:iconSize="18dp" />
+    </LinearLayout>
+</LinearLayout>

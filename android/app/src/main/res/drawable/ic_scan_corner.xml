@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One scanner corner (top-left); rotate for the others. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="34dp"
+    android:height="34dp"
+    android:viewportWidth="34"
+    android:viewportHeight="34">
+    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="3.6"
+        android:strokeLineCap="round" android:strokeLineJoin="round"
+        android:pathData="M3,30 V13 Q3,3 13,3 H30" />
+</vector>

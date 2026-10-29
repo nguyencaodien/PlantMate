@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Soft light-green glow behind the launch logo. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <gradient android:type="radial" android:gradientRadius="130dp"
+        android:startColor="#5963C98E" android:centerColor="#1A63C98E" android:endColor="#0063C98E" />
+</shape>

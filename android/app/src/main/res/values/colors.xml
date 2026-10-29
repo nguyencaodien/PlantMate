@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PlantMate tokens (light), canvas B (2026-10-14): white ground, green #1F7A45 for actions and state, ink #111412 for type and strong surfaces. -->
+    <color name="white">#FFFFFFFF</color>
+    <color name="color_background">#FFFFFFFF</color>
+    <color name="color_surface">#FFFFFFFF</color>
+    <color name="color_chip_surface">#FFF3F4F3</color>
+    <color name="color_brand_surface">#FFE6F2EA</color>
+    <color name="color_primary">#FF1F7A45</color>
+    <color name="color_on_primary">#FFFFFFFF</color>
+    <color name="color_primary_tint">#FFE6F2EA</color>
+    <color name="color_on_primary_tint">#FF14532F</color>
+    <color name="color_accent">#FF1F7A45</color>
+    <color name="color_on_accent">#FFFFFFFF</color>
+    <color name="color_success">#FF1F7A45</color>
+    <color name="color_on_dark_muted">#FFBFC7C2</color>
+    <color name="color_text_primary">#FF111412</color>
+    <color name="color_text_secondary">#FF5B625D</color>
+    <color name="color_border">#FFE4E7E4</color>
+    <color name="color_avatar_neutral">#FFECECEC</color>
+    <color name="white_12">#1FFFFFFF</color>
+    <color name="color_dash">#FFBDBDBD</color>
+    <color name="week_bar_low">#FFB7D9C3</color>
+    <!-- On the Garden "Today" card (primary green background). -->
+    <color name="progress_on_dark">#FF6EE0A0</color>
+    <color name="progress_track_on_dark">#3DFFFFFF</color>
+    <!-- Ink on white pills over photos; stays dark in night mode because the pill stays white. -->
+    <color name="ink_on_photo">#FF111412</color>
+    <color name="color_input_border">#FFCFCFCF</color>
+    <color name="color_muted_divider">#FFD6D6D6</color>
+    <color name="color_give_away">#FF1F7A45</color>
+    <color name="color_give_away_tint">#FF1F7A45</color>
+    <color name="color_trade">#FF14532F</color>
+    <color name="color_trade_tint">#FFE6F2EA</color>
+    <color name="color_sell_tint">#FFF0F0F0</color>
+    <color name="color_danger">#FFB3261E</color>
+    <color name="color_water_due">#FF1F7A45</color>
+    <color name="color_water_due_tint">#FFE6F2EA</color>
+    <color name="color_like">#FFB3261E</color>
+    <color name="color_ripple">#1F111412</color>
+    <!-- Icon on the primary button: white on green (light), dark green on leaf green (dark). -->
+    <color name="color_primary_button_icon">#FFFFFFFF</color>
+    <!-- Review stars -->
+    <color name="color_star">#FFE0A100</color>
+    <!-- Admin chart series (validated palette, fixed order) -->
+    <color name="chart_series_1">#FF15803D</color>
+    <color name="chart_series_2">#FF2563EB</color>
+    <color name="chart_series_3">#FFD97706</color>
+    <!-- Browse-by-type tiles: soft badge and icon ink per type -->
+    <color name="type_trade_soft">#FFE6F2EA</color>
+    <color name="type_trade_ink">#FF14532F</color>
+    <color name="type_sell_soft">#FFF0F0F0</color>
+    <color name="type_sell_ink">#FF111412</color>
+    <color name="chart_series_4">#FFDB2777</color>
+    <color name="chart_series_5">#FF0891B2</color>
+    <!-- Inactive / dismissed slices (not a categorical hue) -->
+    <color name="chart_neutral">#FF94A3B8</color>
+    <color name="color_forest">#FF1F7A45</color>
+    <color name="color_hero_top">#FFFFFFFF</color>
+    <color name="color_hero_text">#FF111412</color>
+    <color name="color_hero_text_muted">#FF5B625D</color>
+    <color name="color_tile_lavender">#FFE6F2EA</color>
+    <color name="color_tile_lavender_ink">#FF1F7A45</color>
+    <color name="color_leaf">#FF1F7A45</color>
+    <color name="color_on_leaf_muted">#D1FFFFFF</color>
+    <color name="color_leaf_row">#FF165235</color>
+    <!-- Text on fixed pastel badges/pills and white photo buttons: same in both themes. -->
+    <color name="badge_give_text">#FFFFFFFF</color>
+    <color name="badge_trade_text">#FF14532F</color>
+    <color name="badge_sell_text">#FF111412</color>
+    <color name="status_active_ink">#FF14532F</color>
+    <color name="status_active_dot">#FF1F7A45</color>
+    <color name="status_reserved_ink">#FF78350F</color>
+    <color name="status_reserved_dot">#FFD97706</color>
+    <color name="status_rehomed_ink">#FF111412</color>
+    <color name="status_unavailable_ink">#FF5B625D</color>
+    <color name="status_unavailable_dot">#FF8A988E</color>
+    <color name="photo_button_ink">#FF111412</color>
+    <color name="saved_heart">#FFB3261E</color>
+    <!-- Photo crop editor: dark in both themes so the photo stands out. -->
+    <color name="crop_background">#FF0B100D</color>
+    <color name="crop_hint">#B3FFFFFF</color>
+    <!-- "Email verified" pill: same in both themes. -->
+    <color name="verified_bg">#FFE6F2EA</color>
+    <color name="verified_ink">#FF14532F</color>
+    <!-- Scanner sweep on the dark Doctor block: same in both themes. -->
+    <color name="scan_line">#FF8ED3A6</color>
+    <!-- Secondary text on green cards: same in both themes. -->
+    <color name="on_green_muted">#D1FFFFFF</color>
+    <!-- Canvas B: floating black navigation capsule (same ink in both themes). -->
+    <color name="nav_capsule">#FF111412</color>
+    <color name="nav_inactive">#FF7A867E</color>
+    <color name="nav_active_bg">#FFFFFFFF</color>
+    <color name="nav_active_ink">#FF1F7A45</color>
+    <!-- Grouping panel (one level, never nested) and the deeper rank panel on Profile. -->
+    <color name="color_panel">#FFF3F4F3</color>
+    <color name="color_panel_line">#FFE9ECE9</color>
+    <color name="color_rank_panel">#FFCFE5D6</color>
+    <color name="rank_track">#1F111412</color>
+    <!-- Launcher icon background: the deep green of the logo, the same in both themes. -->
+    <color name="launcher_background">#FF101D14</color>
+    <!-- Brand surfaces from the logo (launch and sign-in), the same in both themes. -->
+    <color name="brand_ring">#FF63C98E</color>
+    <color name="brand_on_deep">#FFF2F5F2</color>
+    <color name="brand_on_deep_muted">#FFA9C2B1</color>
+    <!-- Sale status pill on listing cards (approved mockup B1, 2026-10-15). -->
+    <color name="sale_available_bg">#FFE3F3E8</color>
+    <color name="sale_available_fg">#FF1F6B42</color>
+    <color name="sale_reserved_bg">#FFFFF1CC</color>
+    <color name="sale_reserved_fg">#FF7A4B00</color>
+    <color name="sale_sold_bg">#FFECEFED</color>
+    <color name="sale_sold_fg">#FF4B5A50</color>
+    <color name="color_garden_track">#FFCFE5D6</color>
+    <!-- Listing detail owner card (approved canvas option B, 2026-10-16): deep green, light text. -->
+    <color name="owner_card_bg">#FF12301F</color>
+    <color name="owner_card_text">#FFF2F5F2</color>
+    <color name="owner_card_muted">#FFA9C2B1</color>
+    <color name="owner_card_line">#24FFFFFF</color>
+    <color name="owner_card_ink">#FF12301F</color>
+    <!-- Trust level pill on the owner card; the card is deep green in both themes. -->
+    <color name="owner_card_level">#FF8BDCA6</color>
+    <!-- Care heatmap icon style 1 (approved 2026-10-17): blue water, earth-orange fertiliser, white icons. -->
+    <color name="care_water">#FF4A93D6</color>
+    <color name="care_feed">#FFD18A3A</color>
+    <!-- Notifications (bell canvas A). -->
+    <color name="notif_unread_bg">#FFEDF5EF</color>
+    <color name="notif_like">#FFD9506A</color>
+    <color name="notif_friend">#FFB5651D</color>
+    <color name="notif_badge">#FFD93B30</color>
+    <!-- Brand accents and the member profile ink card (member profile canvas D). -->
+    <color name="brand_lime">#FFC5F04A</color>
+    <color name="brand_forest">#FF0A3622</color>
+    <color name="member_hero_bg">#FF111814</color>
+    <color name="member_hero_text">#E6FFFFFF</color>
+    <color name="member_hero_muted">#A6FFFFFF</color>
+    <color name="member_hero_line">#2EFFFFFF</color>
+    <color name="member_hero_track">#24FFFFFF</color>
+    <color name="member_hero_outline">#B3FFFFFF</color>
+    <!-- Admin dashboard (canvas X). -->
+    <color name="admin_page_glow">#FFE3EFDC</color>
+    <color name="admin_cell">#FFF3F4F3</color>
+    <color name="admin_highlight">#B3C5F04A</color>
+    <color name="admin_amber">#FFD9822B</color>
+    <color name="admin_sage">#FF8FBFA1</color>
+    <color name="admin_grey">#FFA7B1AA</color>
+    <color name="nav_surface">#FFFFFFFF</color>
+    <color name="nav_line">#FFE6EAE7</color>
+    <color name="nav_doctor_bg">#FF111814</color>
+    <color name="nav_doctor_icon">#FFC5F04A</color>
+    <color name="admin_page">#FFF6F7F6</color>
+</resources>

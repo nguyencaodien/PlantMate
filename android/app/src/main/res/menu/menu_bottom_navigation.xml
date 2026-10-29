@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Five tabs (nav canvas B). Doctor's slot is blank: the raised round button sits over it. -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_nav_home_state"
+        android:title="@string/nav_home" />
+    <item
+        android:id="@+id/nav_garden"
+        android:icon="@drawable/ic_nav_garden_state"
+        android:title="@string/nav_garden" />
+    <item
+        android:id="@+id/nav_doctor"
+        android:icon="@drawable/ic_nav_blank"
+        android:title="@string/nav_doctor" />
+    <item
+        android:id="@+id/nav_community"
+        android:icon="@drawable/ic_nav_community_state"
+        android:title="@string/nav_community" />
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_nav_profile_state"
+        android:title="@string/nav_profile" />
+</menu>

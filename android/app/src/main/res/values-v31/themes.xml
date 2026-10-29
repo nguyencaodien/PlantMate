@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Android 12+: the system splash before the launch screen is plain deep green, without the app icon. -->
+    <style name="Theme.PlantMate.Launch" parent="Theme.UngDungChiaSeCayCanh">
+        <item name="android:windowBackground">@color/launcher_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:windowSplashScreenBackground">@color/launcher_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/splash_blank</item>
+    </style>
+</resources>

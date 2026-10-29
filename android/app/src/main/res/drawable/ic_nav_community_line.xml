@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Community: two people, outline (nav canvas B). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+    <path android:fillColor="#00000000" android:strokeColor="#FF000000" android:strokeWidth="1.8"
+        android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M9,9m-3,0a3,3 0,1 1,6 0a3,3 0,1 1,-6 0" />
+    <path android:fillColor="#00000000" android:strokeColor="#FF000000" android:strokeWidth="1.8"
+        android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M3.5,19a5.5,5.5 0,0 1,11 0" />
+    <path android:fillColor="#00000000" android:strokeColor="#FF000000" android:strokeWidth="1.8"
+        android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M16,6.5a2.5,2.5 0,1 1,0 5M17.5,14.5A4.5,4.5 0,0 1,20.5 19" />
+</vector>

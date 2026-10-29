@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One entry of "Recent activity" (canvas B): a dot on a timeline line, what was done and when. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <FrameLayout
+        android:layout_width="16dp"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/activityLine"
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@color/color_border" />
+
+        <View
+            android:id="@+id/activityDot"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_activity_dot" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:id="@+id/activityTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.PlantMate.Label"
+            android:textColor="@color/color_text_primary"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/activityWhen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+            android:textSize="13sp" />
+    </LinearLayout>
+</LinearLayout>

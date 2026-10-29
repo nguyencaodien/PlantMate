@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="2200"
+    android:startOffset="900"
+    android:repeatCount="infinite">
+        <propertyValuesHolder android:propertyName="scaleX" android:valueType="floatType">
+            <keyframe android:fraction="0" android:value="0.3" />
+            <keyframe android:fraction="0.5" android:value="1" android:interpolator="@interpolator/pm_ease_in_out" />
+            <keyframe android:fraction="1" android:value="0.3" android:interpolator="@interpolator/pm_ease_in_out" />
+        </propertyValuesHolder>
+        <propertyValuesHolder android:propertyName="scaleY" android:valueType="floatType">
+            <keyframe android:fraction="0" android:value="0.3" />
+            <keyframe android:fraction="0.5" android:value="1" android:interpolator="@interpolator/pm_ease_in_out" />
+            <keyframe android:fraction="1" android:value="0.3" android:interpolator="@interpolator/pm_ease_in_out" />
+        </propertyValuesHolder>
+</objectAnimator>

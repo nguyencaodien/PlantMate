@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Red unread count on the Home bell, ringed in the page colour. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/notif_badge" />
+    <stroke android:width="2dp" android:color="@color/color_background" />
+    <corners android:radius="10dp" />
+</shape>

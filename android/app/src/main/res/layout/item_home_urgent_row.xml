@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "Needs a home soon" row (canvas B): photo, name and reason, ink "N days left" tag. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:minHeight="72dp"
+    android:orientation="horizontal">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/urgent_photo"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_panel_16"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.PlantMate.Frame12" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/urgent_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.PlantMate.CardTitle"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/urgent_meta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/urgent_days"
+        style="@style/Widget.PlantMate.Tag"
+        android:layout_height="24dp"
+        android:background="@drawable/bg_tag_ink"
+        android:paddingStart="9dp"
+        android:paddingEnd="9dp"
+        android:textColor="@color/color_background"
+        android:textSize="12sp" />
+</LinearLayout>

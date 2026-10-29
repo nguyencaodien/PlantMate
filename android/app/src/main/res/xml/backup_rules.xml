@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 11 and lower. Nothing account-scoped leaves the device: the Garden/Doctor database,
+     preferences (including the Firebase sign-in state) and private photos are excluded, so a
+     restore never brings one account's data or session to another device. -->
+<full-backup-content>
+    <exclude domain="database" path="." />
+    <exclude domain="sharedpref" path="." />
+    <exclude domain="file" path="." />
+    <exclude domain="external" path="." />
+</full-backup-content>

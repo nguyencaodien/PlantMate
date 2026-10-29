@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Minus / value / plus stepper (canvas B): white pill on a grey panel. Value and actions set in code. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="52dp"
+    android:background="@drawable/bg_stepper"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/stepper_minus"
+        android:layout_width="48dp"
+        android:layout_height="52dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/stepper_less"
+        android:scaleType="center"
+        android:src="@drawable/ic_minus"
+        app:tint="@color/color_text_primary" />
+
+    <TextView
+        android:id="@+id/stepper_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:accessibilityLiveRegion="polite"
+        android:fontFeatureSettings="tnum"
+        android:gravity="center"
+        android:minWidth="64dp"
+        android:textAppearance="@style/TextAppearance.PlantMate.CardTitle"
+        android:textSize="16sp" />
+
+    <ImageButton
+        android:id="@+id/stepper_plus"
+        android:layout_width="48dp"
+        android:layout_height="52dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/stepper_more"
+        android:scaleType="center"
+        android:src="@drawable/ic_add"
+        app:tint="@color/color_text_primary" />
+</LinearLayout>

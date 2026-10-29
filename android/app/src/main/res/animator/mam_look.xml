@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- pmLook: eyes glance left, then right. -->
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="5200"
+    android:repeatCount="infinite">
+        <propertyValuesHolder android:propertyName="translateX" android:valueType="floatType">
+            <keyframe android:fraction="0" android:value="0" />
+            <keyframe android:fraction="0.35" android:value="0" android:interpolator="@interpolator/pm_ease_in_out" />
+            <keyframe android:fraction="0.45" android:value="-2.2" android:interpolator="@interpolator/pm_ease_in_out" />
+            <keyframe android:fraction="0.6" android:value="-2.2" android:interpolator="@interpolator/pm_ease_in_out" />
+            <keyframe android:fraction="0.7" android:value="2.2" android:interpolator="@interpolator/pm_ease_in_out" />
+            <keyframe android:fraction="0.85" android:value="2.2" android:interpolator="@interpolator/pm_ease_in_out" />
+            <keyframe android:fraction="1" android:value="0" android:interpolator="@interpolator/pm_ease_in_out" />
+        </propertyValuesHolder>
+</objectAnimator>

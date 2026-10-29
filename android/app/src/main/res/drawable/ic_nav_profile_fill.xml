@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Profile, selected: a solid disc with the portrait cut out (nav canvas B). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+    <path android:fillColor="#FF000000" android:fillType="evenOdd"
+        android:pathData="M12,3.5a8.5,8.5 0,1 1,0 17a8.5,8.5 0,1 1,0 -17ZM12,7.2a2.8,2.8 0,1 0,0 5.6a2.8,2.8 0,1 0,0 -5.6ZM6.8,18A6,6 0,0 1,17.2 18A8.5,8.5 0,0 1,6.8 18Z" />
+</vector>

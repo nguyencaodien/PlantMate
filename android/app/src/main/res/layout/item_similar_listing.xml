@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Another listing under a listing (canvas B): 140dp photo, name, then "Free", "For …" or the price. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="140dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="12dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/similarFrame"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@drawable/bg_panel_16">
+
+        <ImageView
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_botanical_placeholder" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/similarPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/listing_cover_photo"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.PlantMate.Frame14" />
+
+        <TextView
+            android:id="@+id/similarOffer"
+            style="@style/Widget.PlantMate.Tag"
+            android:layout_height="24dp"
+            android:layout_gravity="top|start"
+            android:layout_margin="8dp"
+            android:paddingStart="9dp"
+            android:paddingEnd="9dp"
+            android:textSize="12sp" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/similarName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.PlantMate.CardTitle"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/similarMeta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.PlantMate.CardTitle"
+        android:textSize="15sp" />
+</LinearLayout>

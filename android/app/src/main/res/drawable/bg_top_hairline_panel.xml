@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hairline along the top of a row inside a grey panel; the panel shows through. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:gravity="top" android:height="1dp">
+        <shape android:shape="rectangle"><solid android:color="@color/color_panel_line" /></shape>
+    </item>
+</layer-list>

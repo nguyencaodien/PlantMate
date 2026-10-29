@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Outline normally, filled when the tab is selected. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true" android:drawable="@drawable/ic_nav_garden_fill" />
+    <item android:drawable="@drawable/ic_nav_garden_line" />
+</selector>

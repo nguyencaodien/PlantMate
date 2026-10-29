@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One verification row (trust canvas 1 and 3): name, points, then a tick or a "Verify" button. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="44dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/trust_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.PlantMate.Body"
+        android:textColor="@color/color_text_primary"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/trust_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:fontFeatureSettings="tnum"
+        android:textAppearance="@style/TextAppearance.PlantMate.Label"
+        android:textColor="@color/color_text_secondary"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/trust_done"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:contentDescription="@string/trust_done"
+        android:src="@drawable/ic_verified" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/trust_action"
+        style="@style/Widget.PlantMate.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:textSize="13sp"
+        android:text="@string/trust_verify"
+        android:visibility="gone" />
+</LinearLayout>

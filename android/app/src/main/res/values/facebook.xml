@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Facebook Login settings from the Meta for Developers app (Settings › Basic / Advanced).
+    Replace all three values; until facebook_app_id is a real (numeric) ID the button stays hidden.
+    The client token is meant to ship inside the app; the App Secret never goes here, only into
+    Firebase Console › Authentication › Sign-in method › Facebook.
+-->
+<resources>
+    <string name="facebook_app_id" translatable="false">2963084424025474</string>
+    <string name="facebook_client_token" translatable="false">f38ed8aec262e9a5921a1a26121a0d85</string>
+    <!-- "fb" + the app ID, e.g. fb1234567890 (lower-case: URL schemes are case-sensitive). -->
+    <string name="fb_login_protocol_scheme" translatable="false">fb2963084424025474</string>
+</resources>

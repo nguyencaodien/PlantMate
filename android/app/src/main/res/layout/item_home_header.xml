@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Home header (canvas B "Trang chủ", 20dp page margins): area chip with inbox and saved, "Featured near you"
+     with the pause button, the hero slider, search, the garden reminder, then "New near you" with the type chips
+     and the grid state (loading/empty/error). The listing grid follows in the same RecyclerView. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Area chip · inbox · saved -->
+    <LinearLayout
+        android:id="@+id/home_brand_row"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="12dp"
+        android:paddingEnd="8dp">
+
+        <TextView
+            android:id="@+id/home_area_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:maxWidth="240dp"
+            android:drawablePadding="6dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:textAppearance="@style/TextAppearance.PlantMate.CardTitle"
+            android:textSize="15sp"
+            app:drawableStartCompat="@drawable/ic_location_filled_16"
+            app:drawableTint="@color/color_primary" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <FrameLayout
+            android:layout_width="48dp"
+            android:layout_height="48dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/home_inbox_button"
+            style="@style/Widget.PlantMate.IconButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/home_inbox_description"
+            app:icon="@drawable/ic_chat"
+            app:iconSize="24dp" />
+            <TextView
+                android:id="@+id/home_inbox_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/bg_bell_badge"
+                android:fontFeatureSettings="tnum"
+                android:gravity="center"
+                android:importantForAccessibility="no"
+                android:minWidth="20dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/home_saved_button"
+            style="@style/Widget.PlantMate.IconButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/home_saved_description"
+            app:icon="@drawable/ic_bookmark"
+            app:iconSize="24dp" />
+
+        <!-- Notifications bell with the unread count (bell canvas, option A). -->
+        <FrameLayout
+            android:layout_width="48dp"
+            android:layout_height="48dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/home_bell_button"
+                style="@style/Widget.PlantMate.IconButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="@string/notifications_title"
+                app:icon="@drawable/ic_bell"
+                app:iconSize="24dp" />
+
+            <TextView
+                android:id="@+id/home_bell_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/bg_bell_badge"
+                android:fontFeatureSettings="tnum"
+                android:gravity="center"
+                android:importantForAccessibility="no"
+                android:minWidth="20dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- "Featured near you" -->
+    <LinearLayout
+        android:id="@+id/home_headline_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <TextView
+            android:id="@+id/home_featured_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:accessibilityHeading="true"
+            android:text="@string/home_featured_title"
+            android:textAppearance="@style/TextAppearance.PlantMate.Hero"
+            android:textSize="30sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/home_create_button"
+            style="@style/Widget.PlantMate.Button.Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:contentDescription="@string/home_create_listing_description"
+            android:text="@string/home_fab_post" />
+    </LinearLayout>
+
+    <!-- "Featured near you" (mockup C1): a sideways strip of 160×220dp photo cards -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_hero_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginTop="16dp"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:overScrollMode="never"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp" />
+
+    <!-- Search -->
+    <LinearLayout
+        android:id="@+id/home_search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_search_soft"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="4dp">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_search"
+            app:tint="@color/color_text_secondary" />
+
+        <EditText
+            android:id="@+id/home_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:hint="@string/home_search_hint"
+            android:imeOptions="actionSearch"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:textAppearance="@style/TextAppearance.PlantMate.Body"
+            android:textColorHint="@color/color_text_secondary"
+            android:textSize="15sp" />
+
+        <FrameLayout
+            android:id="@+id/home_search_filters"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/home_filters_description"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_sliders"
+                app:tint="@color/color_text_primary" />
+
+            <TextView
+                android:id="@+id/home_filter_badge"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/bg_filter_badge"
+                android:gravity="center"
+                android:importantForAccessibility="no"
+                android:textColor="@color/color_on_accent"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- "Vườn hôm nay" (mockup E2, Room): today's watering, a care progress bar and a few of the member's
+         plants; tap opens the Garden tab -->
+    <LinearLayout
+        android:id="@+id/home_garden_widget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_tint_panel_16"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:minHeight="64dp"
+        android:orientation="horizontal"
+        android:paddingStart="14dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="12dp">
+
+        <FrameLayout
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_circle_primary">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_water_drop"
+                app:tint="@color/white" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_garden_today"
+                android:textAppearance="@style/TextAppearance.PlantMate.Label"
+                android:textColor="@color/color_text_primary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/home_garden_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="@string/home_garden_loading"
+                android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                android:textSize="12.5sp" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/home_garden_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:importantForAccessibility="no"
+                android:visibility="gone"
+                app:indicatorColor="@color/color_primary"
+                app:trackColor="@color/color_garden_track"
+                app:trackCornerRadius="2dp"
+                app:trackThickness="4dp" />
+        </LinearLayout>
+
+        <!-- Up to three of the member's own plant photos (Room), overlapping -->
+        <LinearLayout
+            android:id="@+id/home_garden_thumbs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:importantForAccessibility="no"
+            android:orientation="horizontal" />
+    </LinearLayout>
+
+    <!-- A thin vine with three leaves between the garden card and the listings (mockup E2) -->
+    <LinearLayout
+        android:id="@+id/home_vine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:orientation="horizontal"
+        android:paddingStart="56dp"
+        android:paddingEnd="56dp">
+
+        <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"
+            android:background="@color/color_border" />
+        <ImageView style="@style/PlantMateVineLeaf" android:alpha="0.6" android:rotation="-40" />
+        <ImageView style="@style/PlantMateVineLeaf" android:layout_width="14dp" android:layout_height="14dp" />
+        <ImageView style="@style/PlantMateVineLeaf" android:alpha="0.6" android:rotation="40" />
+        <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"
+            android:background="@color/color_border" />
+    </LinearLayout>
+
+    <!-- "New near you" with the sort shortcut -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="12dp">
+
+        <FrameLayout
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_circle_primary_tint">
+
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_leaf_solid"
+                app:tint="@color/color_primary" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/home_fresh_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:accessibilityHeading="true"
+            android:text="@string/home_new_title"
+            android:textAppearance="@style/TextAppearance.PlantMate.SectionTitle"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/home_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="4dp"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/home_sort_newest"
+            android:textAppearance="@style/TextAppearance.PlantMate.Label"
+            android:textColor="@color/color_text_primary"
+            android:textSize="14sp"
+            app:drawableEndCompat="@drawable/ic_chevron_down_16"
+            app:drawableTint="@color/color_text_primary" />
+    </LinearLayout>
+
+    <!-- Type chips for the grid below -->
+    <HorizontalScrollView
+        android:id="@+id/home_filter_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:clipToPadding="false"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/home_filter_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/home_filter_all"
+                style="@style/PlantMateHomeChip"
+                android:text="@string/home_filter_all" />
+
+            <TextView
+                android:id="@+id/home_filter_give_away"
+                style="@style/PlantMateHomeChip"
+                android:layout_marginStart="8dp"
+                android:text="@string/home_filter_give_away" />
+
+            <TextView
+                android:id="@+id/home_filter_trade"
+                style="@style/PlantMateHomeChip"
+                android:layout_marginStart="8dp"
+                android:text="@string/home_filter_trade" />
+
+            <TextView
+                android:id="@+id/home_filter_sell"
+                style="@style/PlantMateHomeChip"
+                android:layout_marginStart="8dp"
+                android:text="@string/home_filter_sell" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- "12 plants found": only while a type, search or sheet filter narrows the list -->
+    <TextView
+        android:id="@+id/home_filter_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:accessibilityLiveRegion="polite"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+    <!-- Grid state: only one of these shows, and only when the grid has nothing to list. -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/home_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            android:indeterminate="true"
+            app:indicatorColor="@color/color_primary"
+            app:trackColor="@color/color_primary_tint" />
+
+        <LinearLayout
+            android:id="@+id/home_empty_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_lg"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="84dp"
+                android:layout_height="120dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_mam_happy" />
+
+            <TextView
+                android:id="@+id/home_empty_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:gravity="center"
+                android:text="@string/home_empty_title"
+                android:textAppearance="@style/TextAppearance.PlantMate.SectionTitle" />
+
+            <TextView
+                android:id="@+id/home_empty_supporting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:gravity="center"
+                android:text="@string/home_empty_supporting_text"
+                android:textAppearance="@style/TextAppearance.PlantMate.Meta" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/home_empty_action"
+                style="@style/Widget.PlantMate.Button.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:text="@string/home_empty_action" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/home_error_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_lg"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/home_error_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.PlantMate.SectionTitle" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/home_retry"
+                style="@style/Widget.PlantMate.Button.Tonal.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:text="@string/action_retry" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

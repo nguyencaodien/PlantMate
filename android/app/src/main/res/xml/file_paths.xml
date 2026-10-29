@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- FileProvider paths: Doctor camera photos and cropped photos stay in app-private storage. -->
+<paths>
+    <files-path name="doctor_photos" path="doctor_photos/" />
+    <files-path name="photos" path="photos/" />
+</paths>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A single-choice pill (canvas B .chip): hairline ring, ink when chosen. Created at runtime. -->
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/PlantMateFilterChip"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />

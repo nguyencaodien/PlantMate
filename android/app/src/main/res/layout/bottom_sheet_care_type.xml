@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "What did you do for this plant?" sheet: one row per care type with its soft icon tile
+     (same colours as the activity log). Rows are added in code. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="20dp">
+
+    <TextView
+        android:id="@+id/careTypeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:accessibilityHeading="true"
+        android:text="@string/plant_log_care_title"
+        android:textAppearance="@style/TextAppearance.PlantMate.SectionTitle" />
+
+    <TextView
+        android:id="@+id/careTypeSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/care_sheet_subtitle"
+        android:textAppearance="@style/TextAppearance.PlantMate.Meta" />
+
+    <LinearLayout
+        android:id="@+id/careTypeRows"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:orientation="vertical" />
+</LinearLayout>

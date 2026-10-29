@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fertiliser bag with a plant (from the user's reference, care heatmap icon style 1). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="2"
+        android:strokeLineCap="round" android:strokeLineJoin="round"
+        android:pathData="M4.6,3.4C8,2.5 16,4.5 19.4,3.4L18.2,5.6C19.1,9.5 19.1,14.5 18.2,18.4L19.4,20.6C16,21.5 8,19.5 4.6,20.6L5.8,18.4C4.9,14.5 4.9,9.5 5.8,5.6Z M5.8,5.6H18.2M5.8,18.4H18.2" />
+    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.6"
+        android:strokeLineCap="round" android:strokeLineJoin="round"
+        android:pathData="M12,16.8V12.6C12,10.6 10.8,9.4 9.1,8.6M12,12.4L14.2,10.6M12,14.6L14.8,13.1M12,14.8L9.9,13.4" />
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M6.6,8.2C7.3,6.9 9,6.8 9.6,8.3 8.6,9.2 7.4,9.2 6.6,8.2ZM14,10.3C14.6,9.2 16.2,9.1 16.8,10.1 16,11 14.7,11.1 14,10.3ZM14.6,12.9C15.2,11.8 16.8,11.7 17.4,12.7 16.6,13.6 15.3,13.7 14.6,12.9ZM7.4,13.4C8,12.3 9.6,12.2 10.1,13.3 9.3,14.2 8,14.2 7.4,13.4Z" />
+</vector>

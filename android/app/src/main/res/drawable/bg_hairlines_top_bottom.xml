@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Transparent band with a hairline above and below (the Garden week, canvas option J). -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:gravity="top" android:height="1dp">
+        <shape android:shape="rectangle"><solid android:color="@color/color_border" /></shape>
+    </item>
+    <item android:gravity="bottom" android:height="1dp">
+        <shape android:shape="rectangle"><solid android:color="@color/color_border" /></shape>
+    </item>
+</layer-list>

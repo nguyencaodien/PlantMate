@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Lime "+N vs last week" pill on the ink highlight card. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/brand_lime" />
+    <corners android:radius="999dp" />
+</shape>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Story viewer: the photo full screen; progress segments, the author and close on top; the title
+     and caption at the bottom. Tap the left or right side for the previous or next story. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/storyViewerRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/storyViewerImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="fitCenter" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/storyViewerPrev"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <View
+            android:id="@+id/storyViewerNext"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2" />
+    </LinearLayout>
+
+    <!-- Top: segments, author, delete (own story), close -->
+    <LinearLayout
+        android:id="@+id/storyViewerTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@drawable/bg_scrim_top"
+        android:orientation="vertical"
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="24dp">
+
+        <LinearLayout
+            android:id="@+id/storyViewerSegments"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/storyViewerAuthor"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/storyViewerAvatar"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/bg_avatar_neutral"
+                    android:gravity="center"
+                    android:importantForAccessibility="no"
+                    android:textAppearance="@style/TextAppearance.PlantMate.Label"
+                    android:textColor="@color/color_text_primary"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/storyViewerName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textAppearance="@style/TextAppearance.PlantMate.Label"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/storyViewerTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                        android:textColor="#CCFFFFFF"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/storyViewerDelete"
+                style="@style/Widget.PlantMate.IconButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="@string/story_delete"
+                android:visibility="gone"
+                app:icon="@drawable/ic_trash"
+                app:iconTint="@color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/storyViewerClose"
+                style="@style/Widget.PlantMate.IconButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="@string/story_close"
+                app:icon="@drawable/ic_close"
+                app:iconTint="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Bottom: title and caption -->
+    <LinearLayout
+        android:id="@+id/storyViewerBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bg_scrim_bottom"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="40dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="24dp">
+
+        <TextView
+            android:id="@+id/storyViewerTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_note_mint"
+            android:paddingStart="12dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="6dp"
+            android:textAppearance="@style/TextAppearance.PlantMate.Label"
+            android:textColor="@color/color_on_primary_tint"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/storyViewerCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textAppearance="@style/TextAppearance.PlantMate.Body"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <!-- A friend's heart, or the author's count of hearts -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/storyViewerLike"
+            style="@style/Widget.PlantMate.Button.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="6dp"
+            android:minHeight="48dp"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:icon="@drawable/ic_heart_outline"
+            app:iconTint="@color/white" />
+    </LinearLayout>
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/storyViewerLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        app:indicatorColor="@color/white" />
+
+    <LinearLayout
+        android:id="@+id/storyViewerEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/story_unavailable"
+            android:textAppearance="@style/TextAppearance.PlantMate.Body"
+            android:textColor="@color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/storyViewerEmptyClose"
+            style="@style/Widget.PlantMate.Button.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/story_close"
+            android:textColor="@color/white"
+            app:strokeColor="#66FFFFFF" />
+    </LinearLayout>
+</FrameLayout>

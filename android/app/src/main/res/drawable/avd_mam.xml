@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mầm idle: a soft hop with squash, the shadow shrinking under it, a blink, the top leaf swaying. -->
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/ic_mam">
+    <target android:name="hop" android:animation="@animator/mam_hop" />
+    <target android:name="shadow" android:animation="@animator/mam_shadow" />
+    <target android:name="blink" android:animation="@animator/mam_blink" />
+    <target android:name="sprout" android:animation="@animator/mam_sprout" />
+</animated-vector>

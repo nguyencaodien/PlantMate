@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.any" android:required="false" />
+    <!-- The Facebook SDK asks for the advertising ID; PlantMate does not use ads. -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove" />
+    <!-- Lets Facebook Login open the installed Facebook app (Android 11+ package visibility). -->
+    <queries>
+        <provider android:authorities="com.facebook.katana.provider.PlatformProvider" />
+    </queries>
+
+    <application
+        android:name=".PlantMateApplication"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:localeConfig="@xml/locales_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.UngDungChiaSeCayCanh">
+        <!-- Facebook Login only: no automatic start, app events or advertising ID. -->
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id" />
+        <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token" />
+        <meta-data android:name="com.facebook.sdk.AutoInitEnabled" android:value="false" />
+        <meta-data android:name="com.facebook.sdk.AutoLogAppEventsEnabled" android:value="false" />
+        <meta-data android:name="com.facebook.sdk.AdvertiserIDCollectionEnabled" android:value="false" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.auth.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.PlantMate.Launch">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.auth.SignInActivity" />
+        <activity android:name=".ui.auth.RegisterActivity" />
+        <activity android:name=".ui.auth.ForgotPasswordActivity" />
+        <activity android:name=".ui.photo.ImageCropActivity" />
+        <activity android:name=".ui.auth.CompleteProfileActivity" />
+        <activity android:name=".ui.profile.EditProfileActivity" />
+        <activity android:name=".ui.profile.MemberProfileActivity" />
+        <activity android:name=".ui.profile.FriendsActivity" />
+        <activity android:name=".ui.profile.VneidDemoActivity" />
+        <activity android:name=".ui.profile.PhoneVerifyActivity" />
+        <activity android:name=".ui.notifications.NotificationsActivity" />
+        <activity android:name=".ui.settings.SettingsActivity" />
+        <activity android:name=".ui.settings.AboutActivity" />
+        <activity android:name=".ui.settings.DeleteAccountActivity" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.admin.AdminHomeActivity" />
+        <activity android:name=".ui.admin.AdminListActivity" />
+        <activity android:name=".ui.admin.AdminListingEditActivity" />
+        <activity android:name=".ui.admin.AdminPostEditActivity" />
+        <activity android:name=".ui.admin.AdminMemberActivity" />
+        <activity android:name=".ui.admin.AdminReportActivity" />
+        <activity android:name=".ui.safety.BlockedUsersActivity" />
+        <activity android:name=".ui.listing.CreateListingActivity" />
+        <activity android:name=".ui.listing.ListingPreviewActivity" />
+        <activity android:name=".ui.listing.ListingDetailActivity" />
+        <activity android:name=".ui.listing.SavedListingsActivity" />
+        <activity android:name=".ui.listing.MyListingsActivity" />
+        <activity android:name=".ui.inbox.InboxActivity" />
+        <activity android:name=".ui.review.UserReviewsActivity" />
+        <activity android:name=".ui.community.CreatePostActivity" />
+        <activity android:name=".ui.community.PostDetailActivity" />
+        <activity android:name=".ui.community.CreateStoryActivity" />
+        <activity
+            android:name=".ui.community.StoryViewerActivity"
+            android:theme="@style/Theme.PlantMate.Camera" />
+        <activity android:name=".ui.garden.AddPlantActivity" />
+        <activity android:name=".ui.garden.PlantDetailActivity" />
+        <activity android:name=".ui.garden.EditPlantActivity" />
+        <activity android:name=".ui.doctor.DoctorHistoryActivity" />
+        <activity android:name=".ui.doctor.DoctorResultActivity" />
+        <activity
+            android:name=".ui.doctor.DoctorScanActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PlantMate.Camera" />
+        <activity android:name=".ui.ai.MamChatActivity" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.auth.OnboardingActivity" android:windowSoftInputMode="adjustResize" />
+        <receiver
+            android:name=".notification.CareReminderReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name=".notification.CareReminderBootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <activity android:name=".ui.inbox.ConversationActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <!-- Lets the camera app write Plant Doctor photos into app-private storage. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!-- Stores the in-app language choice for Android 12 and lower (AppCompat per-app locales). -->
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
+    </application>
+
+</manifest>

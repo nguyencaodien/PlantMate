@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The chosen half of the light/dark pill turns ink (lime in dark theme). -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <shape><solid android:color="@color/nav_doctor_bg" /><corners android:radius="999dp" /></shape>
+    </item>
+    <item><shape><solid android:color="@android:color/transparent" /><corners android:radius="999dp" /></shape></item>
+</selector>

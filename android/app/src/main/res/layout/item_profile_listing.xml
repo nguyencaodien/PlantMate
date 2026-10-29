@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A listing on the Profile "Listed" tab (canvas B .lc): photo with the type or status tag, the name, one line.
+     Long-press manages its status. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:longClickable="true"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/pl_frame"
+        android:layout_width="match_parent"
+        android:layout_height="168dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/pl_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_panel"
+            android:contentDescription="@string/listing_cover_photo"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.PlantMate.Frame16" />
+
+        <TextView
+            android:id="@+id/pl_status"
+            style="@style/Widget.PlantMate.Tag"
+            android:layout_height="24dp"
+            android:layout_gravity="top|start"
+            android:layout_margin="8dp"
+            android:drawablePadding="4dp"
+            android:paddingStart="9dp"
+            android:paddingEnd="9dp"
+            android:textSize="12sp" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/pl_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.PlantMate.Label"
+        android:textColor="@color/color_text_primary"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/pl_meta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+        android:textSize="13sp" />
+</LinearLayout>

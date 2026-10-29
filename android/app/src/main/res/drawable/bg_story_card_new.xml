@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Community story card: a green frame while the story is unseen. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@android:color/transparent" />
+    <stroke android:width="3dp" android:color="@color/color_primary" />
+    <corners android:radius="16dp" />
+</shape>
