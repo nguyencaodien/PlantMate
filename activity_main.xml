@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Every primary tab opens on the white ground, so the status bar area continues it. -->
+    <View
+        android:id="@+id/status_scrim"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/color_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/status_scrim" />
+
+    <!-- Docked bar (nav canvas B): five labelled tabs, Doctor as a raised round button over its slot. -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        style="@style/Widget.PlantMate.BottomNavigation"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        app:menu="@menu/menu_bottom_navigation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/nav_doctor_button"
+        android:layout_width="66dp"
+        android:layout_height="66dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/bg_nav_doctor"
+        android:clickable="true"
+        android:contentDescription="@string/nav_doctor"
+        android:elevation="6dp"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_circle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_nav_doctor_scan"
+            app:tint="@color/nav_doctor_icon" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

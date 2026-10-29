@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Listing detail (canvas B "Chi tiết tin"): 380dp photo pager with white round buttons (back, share, report),
+     a thumbnail strip overlapping the photo, the type and status tags, the name, area / posted line, the
+     "who receives" note, the 3-column facts grid, description, the owner panel with rating and counts, the
+     pick-up panel with the owner's free times, the safety line, the owner's other listings, and a sticky bar
+     (save, ask Mầm, message the owner). -->
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/detail_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingBottom="104dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Photos (or the placeholder on a grey panel) -->
+            <FrameLayout
+                android:id="@+id/detail_cover_frame"
+                android:layout_width="match_parent"
+                android:layout_height="380dp"
+                android:background="@color/color_panel">
+
+                <ImageView
+                    android:id="@+id/detail_cover_image"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_botanical_placeholder" />
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/detail_photos"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
+
+            <!-- Thumbnail strip overlapping the photo's lower edge -->
+            <HorizontalScrollView
+                android:id="@+id/detail_thumbs_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-36dp"
+                android:clipToPadding="false"
+                android:paddingStart="17dp"
+                android:paddingEnd="17dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/detail_dots"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+
+            <LinearLayout
+                android:id="@+id/detail_sheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp">
+
+                    <TextView
+                        android:id="@+id/detail_type"
+                        style="@style/Widget.PlantMate.Tag"
+                        android:layout_height="24dp"
+                        android:paddingStart="9dp"
+                        android:paddingEnd="9dp"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/detail_status"
+                        style="@style/Widget.PlantMate.Tag"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_tag_soft"
+                        android:paddingStart="9dp"
+                        android:paddingEnd="9dp"
+                        android:textColor="@color/color_primary"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/detail_species"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                        android:textSize="13sp"
+                        android:textStyle="italic" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/detail_nickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="20dp"
+                    android:accessibilityHeading="true"
+                    android:letterSpacing="-0.02"
+                    android:textAppearance="@style/TextAppearance.PlantMate.Hero"
+                    android:textSize="26sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/detail_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:drawablePadding="4dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                        android:textSize="13sp"
+                        app:drawableStartCompat="@drawable/ic_location_small"
+                        app:drawableTint="@color/color_text_secondary" />
+
+                    <TextView
+                        android:id="@+id/detail_posted"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                        android:textSize="13sp"
+                        app:drawableStartCompat="@drawable/ic_clock_15"
+                        app:drawableTint="@color/color_text_secondary" />
+                </LinearLayout>
+
+                <!-- Who receives the plant -->
+                <TextView
+                    android:id="@+id/detail_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/bg_tint_panel_16"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="14dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="12dp"
+                    android:textAppearance="@style/TextAppearance.PlantMate.Label"
+                    android:textColor="@color/color_text_primary"
+                    android:textSize="13sp"
+                    app:drawableStartCompat="@drawable/ic_info"
+                    app:drawableTint="@color/color_primary" />
+
+                <TextView
+                    style="@style/PlantMateSectionHeading"
+                    android:text="@string/detail_info_title" />
+
+                <!-- Facts grid: rows of three cells, built in code -->
+                <LinearLayout
+                    android:id="@+id/detail_facts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/bg_panel_20"
+                    android:orientation="vertical" />
+
+                <TextView
+                    android:id="@+id/detail_description_title"
+                    style="@style/PlantMateSectionHeading"
+                    android:text="@string/detail_description_title" />
+
+                <TextView
+                    android:id="@+id/detail_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:textAppearance="@style/TextAppearance.PlantMate.Body"
+                    android:textSize="15sp"
+                    app:lineHeight="22sp" />
+
+                <!-- Owner -->
+                <TextView
+                    android:id="@+id/detail_owner_title"
+                    style="@style/PlantMateSectionHeading"
+                    android:text="@string/detail_owner_title_give" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/bg_owner_card"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:id="@+id/detail_owner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/detail_owner_avatar"
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:background="@drawable/bg_avatar_white"
+                            android:gravity="center"
+                            android:importantForAccessibility="no"
+                            android:textAppearance="@style/TextAppearance.PlantMate.CardTitle"
+                            android:textColor="@color/owner_card_ink"
+                            android:textSize="18sp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/detail_owner_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:textAppearance="@style/TextAppearance.PlantMate.CardTitle"
+                                    android:textColor="@color/owner_card_text"
+                                    android:textSize="16sp" />
+
+                                <ImageView
+                                    android:id="@+id/detail_owner_verified"
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:layout_marginStart="4dp"
+                                    android:contentDescription="@string/verified_email"
+                                    android:src="@drawable/ic_verified"
+                                    app:tint="@color/brand_ring" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/detail_owner_location"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:drawablePadding="4dp"
+                                android:ellipsize="end"
+                                android:gravity="center_vertical"
+                                android:maxLines="1"
+                                android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                                android:textColor="@color/owner_card_muted"
+                                android:textSize="13sp"
+                                app:drawableStartCompat="@drawable/ic_star_14"
+                                app:drawableTint="@color/owner_card_muted" />
+                        </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/detail_owner_garden"
+                            style="@style/Widget.PlantMate.Button.Outlined.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/detail_profile"
+                            android:textColor="@color/owner_card_ink"
+                            app:backgroundTint="@color/white"
+                            app:strokeWidth="0dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/detail_owner_bio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textAppearance="@style/TextAppearance.PlantMate.Body"
+                        android:textColor="@color/owner_card_muted"
+                        android:textSize="13sp"
+                        android:visibility="gone" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/detail_owner_badges"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:chipSpacingHorizontal="6dp"
+                        app:chipSpacingVertical="6dp">
+
+                        <TextView
+                            android:id="@+id/detail_owner_badge_email"
+                            style="@style/PlantMateOwnerBadge"
+                            android:text="@string/owner_badge_email"
+                            app:drawableStartCompat="@drawable/ic_check_14" />
+
+                        <TextView
+                            android:id="@+id/detail_owner_badge_phone"
+                            style="@style/PlantMateOwnerBadge"
+                            android:text="@string/owner_badge_phone"
+                            app:drawableStartCompat="@drawable/ic_check_14" />
+
+                        <TextView
+                            android:id="@+id/detail_owner_badge_vneid"
+                            style="@style/PlantMateOwnerBadge"
+                            android:text="@string/owner_badge_vneid"
+                            app:drawableStartCompat="@drawable/ic_check_14" />
+
+                        <TextView
+                            android:id="@+id/detail_owner_level"
+                            style="@style/PlantMateOwnerBadge"
+                            android:background="@drawable/bg_owner_level"
+                            android:fontFeatureSettings="tnum"
+                            android:textColor="@color/owner_card_ink" />
+                    </com.google.android.material.chip.ChipGroup>
+
+                    <LinearLayout
+                        android:id="@+id/detail_owner_stats"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/detail_owner_given"
+                            style="@style/PlantMateStatColumn"
+                            android:textColor="@color/owner_card_muted" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/owner_card_line" />
+
+                        <TextView
+                            android:id="@+id/detail_owner_swapped"
+                            style="@style/PlantMateStatColumn"
+                            android:textColor="@color/owner_card_muted" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/owner_card_line" />
+
+                        <TextView
+                            android:id="@+id/detail_owner_listing"
+                            style="@style/PlantMateStatColumn"
+                            android:textColor="@color/owner_card_muted" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Pick-up -->
+                <TextView
+                    style="@style/PlantMateSectionHeading"
+                    android:text="@string/detail_pickup_section" />
+
+                <LinearLayout
+                    android:id="@+id/detail_pickup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/bg_panel_20"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_location"
+                            app:tint="@color/color_primary" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/detail_pickup_area"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="@style/TextAppearance.PlantMate.CardTitle"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="@string/detail_pickup_note"
+                                android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/detail_pickup_times_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/detail_pickup_free_times"
+                        android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                        android:textSize="13sp" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/detail_pickup_times"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:chipSpacingHorizontal="8dp"
+                        app:chipSpacingVertical="8dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="20dp"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/detail_safety_line"
+                    android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                    android:textSize="13sp"
+                    app:drawableStartCompat="@drawable/ic_shield"
+                    app:drawableTint="@color/color_text_secondary" />
+
+                <!-- The owner's other listings (else similar plants nearby) -->
+                <LinearLayout
+                    android:id="@+id/detail_similar_section"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="12dp">
+
+                        <TextView
+                            android:id="@+id/detail_similar_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:accessibilityHeading="true"
+                            android:text="@string/detail_similar_title"
+                            android:textAppearance="@style/TextAppearance.PlantMate.SectionTitle"
+                            android:textSize="19sp" />
+
+                        <TextView
+                            android:id="@+id/detail_similar_all"
+                            style="@style/PlantMateSeeAll" />
+                    </LinearLayout>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="8dp"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:id="@+id/detail_similar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" />
+                    </HorizontalScrollView>
+                </LinearLayout>
+
+                <!-- Safety actions open from the report button; these hidden buttons keep their handlers. -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/detail_report"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/safety_report_listing"
+                        android:visibility="gone" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/detail_block"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/safety_block"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- White round buttons over the photo -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:id="@+id/detail_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/detail_back"
+                style="@style/PlantMatePhotoButton"
+                android:contentDescription="@string/listing_detail_back"
+                android:src="@drawable/ic_arrow_back" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/detail_action_share"
+                style="@style/PlantMatePhotoButton"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/detail_share"
+                android:enabled="false"
+                android:src="@drawable/ic_share" />
+
+            <ImageButton
+                android:id="@+id/detail_more"
+                style="@style/PlantMatePhotoButton"
+                android:contentDescription="@string/detail_report_short"
+                android:src="@drawable/ic_more_vert"
+                android:visibility="gone" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Sticky actions: save, ask Mầm, message the owner -->
+    <LinearLayout
+        android:id="@+id/detail_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bg_top_hairline"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="16dp"
+        android:visibility="gone">
+
+        <ImageButton
+            android:id="@+id/detail_action_save"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@drawable/bg_outline_14"
+            android:contentDescription="@string/detail_save"
+            android:enabled="false"
+            android:scaleType="center"
+            android:src="@drawable/ic_bookmark"
+            android:stateListAnimator="@animator/pm_press"
+            app:tint="@color/color_text_primary" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/detail_action_ask"
+            style="@style/Widget.PlantMate.Button.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="16dp"
+            android:text="@string/detail_ask_mam"
+            android:textSize="14sp"
+            app:icon="@drawable/ic_mam_help"
+            app:iconPadding="6dp"
+            app:iconSize="20dp"
+            app:iconTint="@color/color_text_primary" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/detail_action_contact"
+            style="@style/Widget.PlantMate.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:text="@string/detail_ask"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/detail_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        app:indicatorColor="@color/color_primary"
+        app:trackColor="@color/color_primary_tint" />
+
+    <LinearLayout
+        android:id="@+id/detail_hidden"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_lg"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/safety_hidden_listing"
+            android:textAppearance="@style/TextAppearance.PlantMate.SectionTitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/detail_hidden_unblock"
+            style="@style/Widget.PlantMate.Button.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:text="@string/safety_unblock" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/detail_hidden_back"
+            style="@style/Widget.PlantMate.Button.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/safety_back" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/detail_not_found"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_lg"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="84dp"
+            android:layout_height="120dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_mam" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:text="@string/detail_not_found"
+            android:textAppearance="@style/TextAppearance.PlantMate.SectionTitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/detail_retry"
+            style="@style/Widget.PlantMate.Button.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:text="@string/action_retry" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/detail_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_lg"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="84dp"
+            android:layout_height="120dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_mam" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:text="@string/detail_load_error"
+            android:textAppearance="@style/TextAppearance.PlantMate.SectionTitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/detail_error_retry"
+            style="@style/Widget.PlantMate.Button.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:text="@string/action_retry" />
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
