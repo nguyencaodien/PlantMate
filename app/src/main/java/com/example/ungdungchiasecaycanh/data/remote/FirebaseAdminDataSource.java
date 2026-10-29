@@ -15,12 +15,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.AggregateSource;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.Source;
 import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
@@ -31,8 +29,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Firestore access for the admin area. Parent mutations and their audit entries are atomic.
- * Large child deletions finish in bounded batches first; rules check every write as the admin.
+ * Firestore access for the admin area. Every mutation is written in one batch together with its
+ * adminActions audit entry, and every write is still checked by firestore.rules (isAdmin()).
  */
 public class FirebaseAdminDataSource {
     private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -113,48 +111,28 @@ public class FirebaseAdminDataSource {
     /** Deletes the post with its comments and likes (Firestore does not cascade subcollections). */
     public Task<Void> deletePost(String adminId, String postId, String note) {
         CollectionReference post = firestore.collection("posts");
-        Task<QuerySnapshot> comments = post.document(postId).collection("comments").get(Source.SERVER);
-        Task<QuerySnapshot> likes = post.document(postId).collection("likes").get(Source.SERVER);
+        Task<QuerySnapshot> comments = post.document(postId).collection("comments").get();
+        Task<QuerySnapshot> likes = post.document(postId).collection("likes").get();
         return Tasks.whenAllSuccess(comments, likes).continueWithTask(task -> {
             if (!task.isSuccessful()) throw failure(task.getException());
-            List<DocumentReference> children = new ArrayList<>();
-            for (DocumentSnapshot d : comments.getResult().getDocuments()) children.add(d.getReference());
-            for (DocumentSnapshot d : likes.getResult().getDocuments()) children.add(d.getReference());
-            return deleteChildrenThenParent(children, post.document(postId), adminId, "POST", postId, note);
+            WriteBatch batch = firestore.batch();
+            for (DocumentSnapshot d : comments.getResult().getDocuments()) batch.delete(d.getReference());
+            for (DocumentSnapshot d : likes.getResult().getDocuments()) batch.delete(d.getReference());
+            batch.delete(post.document(postId));
+            log(batch, adminId, AdminAction.DELETE, "POST", postId, note);
+            return batch.commit();
         });
     }
 
     /** Deletes a comment and, for a top-level comment, its replies. */
     public Task<Void> deleteComment(String adminId, String postId, String commentId, String note) {
         CollectionReference comments = firestore.collection("posts").document(postId).collection("comments");
-        return comments.whereEqualTo("replyToCommentId", commentId).get(Source.SERVER).continueWithTask(task -> {
+        return comments.whereEqualTo("replyToCommentId", commentId).get().continueWithTask(task -> {
             if (!task.isSuccessful()) throw failure(task.getException());
-            List<DocumentReference> children = new ArrayList<>();
-            for (DocumentSnapshot reply : task.getResult().getDocuments()) children.add(reply.getReference());
-            return deleteChildrenThenParent(children, comments.document(commentId), adminId,
-                    "COMMENT", postId + "/" + commentId, note);
-        });
-    }
-
-    /** A failed chunk stops the chain. Retrying queries the remaining children from the server. */
-    private Task<Void> deleteChildrenThenParent(List<DocumentReference> children, DocumentReference parent,
-                                               String adminId, String targetType, String targetId, String note) {
-        Task<Void> chain = Tasks.forResult(null);
-        for (List<DocumentReference> chunk : FirebaseAccountDataSource.chunks(
-                children, FirebaseAccountDataSource.BATCH_SIZE)) {
-            chain = chain.continueWithTask(previous -> {
-                if (!previous.isSuccessful()) throw failure(previous.getException());
-                WriteBatch batch = firestore.batch();
-                for (DocumentReference child : chunk) batch.delete(child);
-                return batch.commit();
-            });
-        }
-        return chain.continueWithTask(deleted -> {
-            if (!deleted.isSuccessful()) throw failure(deleted.getException());
-            // Two writes, committed only after every child batch has succeeded.
             WriteBatch batch = firestore.batch();
-            batch.delete(parent);
-            log(batch, adminId, AdminAction.DELETE, targetType, targetId, note);
+            for (DocumentSnapshot reply : task.getResult().getDocuments()) batch.delete(reply.getReference());
+            batch.delete(comments.document(commentId));
+            log(batch, adminId, AdminAction.DELETE, "COMMENT", postId + "/" + commentId, note);
             return batch.commit();
         });
     }
