@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Add / edit a Garden plant, Vivid Green: forest header with Mầm, photo, labelled fields,
+     a reminder card and a pinned Save button. Shared by AddPlantActivity and EditPlantActivity. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/plantFormHero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_hero"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/plantFormBack"
+                        style="@style/Widget.PlantMate.IconButton.Hero"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/garden_back"
+                        app:icon="@drawable/ic_arrow_back" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/plantFormTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:letterSpacing="-0.02"
+                    android:textAppearance="@style/TextAppearance.PlantMate.Hero"
+                    android:textColor="@color/color_hero_text" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/garden_form_supporting"
+                    android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                    android:textColor="@color/color_hero_text_muted"
+                    android:textSize="14sp" />
+
+                <!-- Mầm with a hint, bottom right of the header -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="4dp">
+
+                    <TextView
+                        android:id="@+id/plantFormBubble"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="62dp"
+                        android:background="@drawable/bg_bubble_signin"
+                        android:paddingStart="11dp"
+                        android:paddingTop="7dp"
+                        android:paddingEnd="11dp"
+                        android:paddingBottom="7dp"
+                        android:text="@string/plant_form_mam_hint"
+                        android:textAppearance="@style/TextAppearance.PlantMate.Label"
+                        android:textColor="#FF0E2217"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:id="@+id/plantFormMam"
+                        android:layout_width="64dp"
+                        android:layout_height="91dp"
+                        android:layout_gravity="bottom|end"
+                        android:contentDescription="@null"
+                        android:src="@drawable/avd_mam" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/plantFormFields"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingTop="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/garden_photo_label"
+                    android:textAppearance="@style/TextAppearance.PlantMate.Label"
+                    android:textColor="@color/color_text_primary"
+                    android:textFontWeight="700" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_dashed_add">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/plantImagePreview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/garden_plant_photo"
+                        android:scaleType="centerCrop"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.PlantMate.Frame18" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/plantSelectPhoto"
+                        style="@style/Widget.PlantMate.Button.Tonal.Small"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/garden_choose_photo"
+                        app:icon="@drawable/ic_camera_add"
+                        app:iconGravity="textStart"
+                        app:iconSize="18dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/plantRemovePhoto"
+                        style="@style/Widget.PlantMate.Button.Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/garden_remove_photo" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="@string/garden_nickname_label"
+                    android:textAppearance="@style/TextAppearance.PlantMate.Label"
+                    android:textColor="@color/color_text_primary"
+                    android:textFontWeight="700" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/plantNicknameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    app:hintEnabled="false"
+                    app:startIconDrawable="@drawable/ic_leaf"
+                    app:startIconTint="@color/color_text_secondary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/plantNicknameInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="52dp"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="0dp"
+                        android:hint="@string/garden_nickname_hint"
+                        android:inputType="textCapSentences"
+                        android:maxLength="60"
+                        android:singleLine="true"
+                        android:textAppearance="@style/TextAppearance.PlantMate.Body"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/garden_species_label"
+                    android:textAppearance="@style/TextAppearance.PlantMate.Label"
+                    android:textColor="@color/color_text_primary"
+                    android:textFontWeight="700" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/plantSpeciesLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    app:hintEnabled="false"
+                    app:startIconDrawable="@drawable/ic_sparkle"
+                    app:startIconTint="@color/color_text_secondary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/plantSpeciesInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="52dp"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="0dp"
+                        android:hint="@string/garden_species_hint"
+                        android:inputType="textCapSentences"
+                        android:maxLength="100"
+                        android:singleLine="true"
+                        android:textAppearance="@style/TextAppearance.PlantMate.Body"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Area (groups the Garden areas) and light -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/garden_room_label"
+                    android:textAppearance="@style/TextAppearance.PlantMate.Label"
+                    android:textColor="@color/color_text_primary"
+                    android:textFontWeight="700" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/plantRoomLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    app:hintEnabled="false"
+                    app:startIconDrawable="@drawable/ic_location"
+                    app:startIconTint="@color/color_text_secondary">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/plantRoomInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="52dp"
+                        android:completionThreshold="0"
+                        android:hint="@string/garden_room_hint"
+                        android:inputType="textCapSentences"
+                        android:maxLength="40"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="0dp"
+                        android:singleLine="true"
+                        android:textAppearance="@style/TextAppearance.PlantMate.Body"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/garden_light_label"
+                    android:textAppearance="@style/TextAppearance.PlantMate.Label"
+                    android:textColor="@color/color_text_primary"
+                    android:textFontWeight="700" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/plantLightGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/bg_segment_track"
+                    android:padding="4dp"
+                    app:selectionRequired="false"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/plantLightSun"
+                        style="@style/Widget.PlantMate.SegmentButton"
+                        android:text="@string/light_sun" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/plantLightBright"
+                        style="@style/Widget.PlantMate.SegmentButton"
+                        android:text="@string/light_bright_indirect" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/plantLightShade"
+                        style="@style/Widget.PlantMate.SegmentButton"
+                        android:text="@string/light_shade" />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                <!-- Watering reminder -->
+                <LinearLayout
+                    android:id="@+id/plantReminderCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_card_18"
+                    android:orientation="vertical"
+                    android:paddingStart="14dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="14dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_mint_circle">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_bell"
+                                app:tint="@color/color_on_primary_tint" />
+                        </FrameLayout>
+
+                        <com.google.android.material.materialswitch.MaterialSwitch
+                            android:id="@+id/plantReminderSwitch"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:minHeight="48dp"
+                            android:text="@string/garden_reminder_label"
+                            android:textAppearance="@style/TextAppearance.PlantMate.Label"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <!-- Schedule: every few days, or at fixed times every day -->
+                    <LinearLayout
+                        android:id="@+id/plantScheduleGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <com.google.android.material.button.MaterialButtonToggleGroup
+                            android:id="@+id/plantFrequencyToggle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/bg_card_16"
+                            android:padding="4dp"
+                            app:checkedButton="@+id/plantFrequencyInterval"
+                            app:selectionRequired="true"
+                            app:singleSelection="true">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/plantFrequencyInterval"
+                                style="@style/Widget.Material3.Button.TextButton"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:layout_weight="1"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:maxLines="1"
+                                android:text="@string/garden_mode_interval"
+                                android:textAppearance="@style/TextAppearance.PlantMate.Label"
+                                android:textColor="@color/seg_content"
+                                app:backgroundTint="@color/seg_background"
+                                app:cornerRadius="12dp"
+                                app:strokeWidth="0dp" />
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/plantFrequencyDaily"
+                                style="@style/Widget.Material3.Button.TextButton"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:layout_weight="1"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:maxLines="1"
+                                android:text="@string/garden_mode_daily"
+                                android:textAppearance="@style/TextAppearance.PlantMate.Label"
+                                android:textColor="@color/seg_content"
+                                app:backgroundTint="@color/seg_background"
+                                app:cornerRadius="12dp"
+                                app:strokeWidth="0dp" />
+                        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/plantIntervalLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            app:hintEnabled="false"
+                            app:startIconDrawable="@drawable/ic_calendar"
+                            app:startIconTint="@color/color_text_secondary">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/plantIntervalInput"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:minHeight="52dp"
+                                android:paddingTop="0dp"
+                                android:paddingBottom="0dp"
+                                android:hint="@string/garden_interval_label"
+                                android:inputType="number"
+                                android:maxLength="3"
+                                android:singleLine="true"
+                                android:textAppearance="@style/TextAppearance.PlantMate.Body"
+                                android:textSize="16sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <LinearLayout
+                            android:id="@+id/plantDailyGroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:text="@string/garden_times_title"
+                                android:textAppearance="@style/TextAppearance.PlantMate.Label"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="14sp" />
+
+                            <com.google.android.material.chip.ChipGroup
+                                android:id="@+id/plantTimesGroup"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/plantAddTime"
+                                style="@style/Widget.PlantMate.Button.Tonal.Small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="48dp"
+                                android:layout_marginTop="4dp"
+                                android:text="@string/garden_add_time"
+                                app:icon="@drawable/ic_add"
+                                app:iconSize="18dp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/plantLimitHint"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:drawablePadding="6dp"
+                            android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                            android:textColor="@color/color_text_secondary"
+                            android:textSize="13sp"
+                            app:drawableStartCompat="@drawable/ic_shield"
+                            app:drawableTint="@color/color_text_secondary" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Edit only: remove the plant with its care log, photos and reminder -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/plantDeleteButton"
+                style="@style/Widget.PlantMate.Button.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="24dp"
+                android:text="@string/garden_delete_plant"
+                android:textColor="@color/color_danger"
+                android:visibility="gone"
+                app:icon="@drawable/ic_trash"
+                app:iconGravity="textStart"
+                app:iconSize="18dp"
+                app:iconTint="@color/color_danger"
+                app:strokeColor="@color/color_danger" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/plantFormBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_bar"
+        android:paddingStart="20dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/plantSaveButton"
+            style="@style/Widget.PlantMate.Button"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/garden_save_plant"
+            app:icon="@drawable/ic_check"
+            app:iconGravity="textStart"
+            app:iconSize="20dp"
+            app:iconTint="@color/color_primary_button_icon" />
+    </FrameLayout>
+</LinearLayout>
