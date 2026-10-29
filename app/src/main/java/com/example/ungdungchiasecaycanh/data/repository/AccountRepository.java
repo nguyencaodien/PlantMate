@@ -27,9 +27,12 @@ public class AccountRepository {
     private final Context context;
     private final FirebaseAuthDataSource auth = new FirebaseAuthDataSource();
     private final FirebaseAccountDataSource remote = new FirebaseAccountDataSource();
+    /** Bound to this confirmation flow, not whichever account is current in a later callback. */
+    private final String accountUid;
 
     public AccountRepository(Context context) {
         this.context = context.getApplicationContext();
+        this.accountUid = auth.getCurrentUserId();
     }
 
     /** How the member proves it is them before deletion. */
@@ -46,7 +49,8 @@ public class AccountRepository {
     }
 
     public boolean signedInRecently() {
-        return System.currentTimeMillis() - auth.getLastSignInMillis() < RECENT_SIGN_IN_MS;
+        return auth.isCurrentUser(accountUid)
+                && System.currentTimeMillis() - auth.getLastSignInMillis() < RECENT_SIGN_IN_MS;
     }
 
     public String email() {
@@ -55,25 +59,28 @@ public class AccountRepository {
     }
 
     public Task<Void> confirmWithPassword(String password) {
+        if (!auth.isCurrentUser(accountUid)) return Tasks.forException(FirebaseAuthDataSource.accountChanged());
         String email = email();
         if (email.isEmpty() || password == null || password.isEmpty())
             return Tasks.forException(new IllegalArgumentException("Password required"));
-        return auth.reauthenticateWithPassword(email, password);
+        return auth.reauthenticateWithPassword(accountUid, email, password);
     }
 
     public Task<Void> confirmWithGoogle(String idToken) {
-        return auth.reauthenticateWithGoogle(idToken);
+        return auth.reauthenticateWithGoogle(accountUid, idToken);
     }
 
     /** Runs after a successful confirmation. The account and its data are gone when it succeeds. */
     public Task<Void> deleteAccount() {
-        String uid = auth.getCurrentUserId();
-        if (uid == null) return Tasks.forException(new IllegalStateException("Authentication required"));
+        final String uid = accountUid;
+        if (!auth.isCurrentUser(uid)) return Tasks.forException(FirebaseAuthDataSource.accountChanged());
         GardenRepository garden = new GardenRepository(context);
         return remote.deleteMemberData(uid)
                 .continueWithTask(deleted -> {
                     if (!deleted.isSuccessful()) throw deleted.getException();
+                    if (!auth.isCurrentUser(uid)) throw FirebaseAuthDataSource.accountChanged();
                     return Tasks.call(LOCAL, () -> {
+                        if (!auth.isCurrentUser(uid)) throw FirebaseAuthDataSource.accountChanged();
                         garden.deleteAllForOwnerBlocking(uid);
                         context.deleteSharedPreferences(SettingsRepository.namespaceForUid(uid));
                         return null;
@@ -81,7 +88,13 @@ public class AccountRepository {
                 })
                 .continueWithTask(local -> {
                     if (!local.isSuccessful()) throw local.getException();
-                    return auth.deleteCurrentUser();
+                    return auth.deleteCurrentUser(uid);
+                }).continueWith(deleted -> {
+                    if (!deleted.isSuccessful()) throw deleted.getException();
+                    // Do not send an old success callback into a newly signed-in account's UI.
+                    String currentUid = auth.getCurrentUserId();
+                    if (currentUid != null && !uid.equals(currentUid)) throw FirebaseAuthDataSource.accountChanged();
+                    return null;
                 });
     }
 }
