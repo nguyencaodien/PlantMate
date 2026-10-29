@@ -5,7 +5,6 @@ import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
@@ -22,17 +21,8 @@ public class FirebaseAuthDataSource {
     }
 
     public String getCurrentUserId() {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        return user == null ? null : user.getUid();
-    }
-
-    public boolean isCurrentUser(String expectedUid) {
-        return expectedUid != null && expectedUid.equals(getCurrentUserId());
-    }
-
-    public static FirebaseAuthRecentLoginRequiredException accountChanged() {
-        return new FirebaseAuthRecentLoginRequiredException("ERROR_REQUIRES_RECENT_LOGIN",
-                "The account changed. Sign in again before deleting the account.");
+        return firebaseAuth.getCurrentUser() == null
+                ? null : firebaseAuth.getCurrentUser().getUid();
     }
 
     public Task<AuthResult> signIn(String email, String password) {
@@ -131,41 +121,17 @@ public class FirebaseAuthDataSource {
         return user.reauthenticate(com.google.firebase.auth.EmailAuthProvider.getCredential(email, password));
     }
 
-    /** Account deletion must reauthenticate the account that opened the confirmation screen. */
-    public Task<Void> reauthenticateWithPassword(String expectedUid, String email, String password) {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user == null || expectedUid == null || !expectedUid.equals(user.getUid())) {
-            return Tasks.forException(accountChanged());
-        }
-        return user.reauthenticate(com.google.firebase.auth.EmailAuthProvider.getCredential(email, password));
-    }
-
     public Task<Void> reauthenticateWithGoogle(String idToken) {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user == null) return Tasks.forException(new IllegalStateException("Authentication required"));
         return user.reauthenticate(GoogleAuthProvider.getCredential(idToken, null));
     }
 
-    public Task<Void> reauthenticateWithGoogle(String expectedUid, String idToken) {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user == null || expectedUid == null || !expectedUid.equals(user.getUid())) {
-            return Tasks.forException(accountChanged());
-        }
-        return user.reauthenticate(GoogleAuthProvider.getCredential(idToken, null));
-    }
-
-    /** Use one captured FirebaseUser for both the UID check and delete, never a later current user. */
-    public Task<Void> deleteCurrentUser(String expectedUid) {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user == null || expectedUid == null || !expectedUid.equals(user.getUid())) {
-            return Tasks.forException(accountChanged());
-        }
-        return user.delete();
-    }
-
     public Task<Void> deleteCurrentUser() {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        return user == null ? Tasks.forResult(null) : user.delete();
+        if (firebaseAuth.getCurrentUser() == null) {
+            return Tasks.forResult(null);
+        }
+        return firebaseAuth.getCurrentUser().delete();
     }
 
     public void signOut() {
