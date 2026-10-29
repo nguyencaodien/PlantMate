@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ask Mầm (canvas B "Trò chuyện với Mầm"): back · Mầm · status over a hairline, grey Mầm bubbles and ink member
+     bubbles, then suggestions, a camera / "Ask Mầm…" / send composer and the reminder that Mầm can be wrong. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mam_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_hairline"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="10dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mam_back"
+            style="@style/Widget.PlantMate.IconButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/action_back"
+            app:icon="@drawable/ic_arrow_back"
+            app:strokeWidth="0dp" />
+
+        <FrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/bg_mint_circle">
+
+            <ImageView
+                android:id="@+id/mam_avatar"
+                android:layout_width="28dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal|top"
+                android:layout_marginTop="2dp"
+                android:contentDescription="@null"
+                android:src="@drawable/avd_mam" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mam_name"
+                android:textAppearance="@style/TextAppearance.PlantMate.CardTitle"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/mam_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:accessibilityLiveRegion="polite"
+                android:text="@string/mam_status"
+                android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mam_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingStart="20dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="12dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_top_hairline"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="12dp">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:scrollbars="none">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/mam_suggestions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipSpacingHorizontal="8dp"
+                app:singleLine="true" />
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mam_photo"
+                style="@style/Widget.PlantMate.IconButton"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:contentDescription="@string/mam_photo"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:backgroundTint="@color/color_panel"
+                app:cornerRadius="26dp"
+                app:icon="@drawable/ic_camera"
+                app:iconTint="@color/color_text_primary"
+                app:strokeWidth="0dp" />
+
+            <EditText
+                android:id="@+id/mam_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_search_field"
+                android:backgroundTint="@color/color_panel"
+                android:hint="@string/mam_input_hint"
+                android:imeOptions="actionSend"
+                android:importantForAutofill="no"
+                android:inputType="textCapSentences"
+                android:minHeight="52dp"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:textAppearance="@style/TextAppearance.PlantMate.Body"
+                android:textColorHint="@color/color_text_secondary"
+                android:textSize="16sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mam_send"
+                style="@style/Widget.PlantMate.IconButton"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/mam_send"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:backgroundTint="@color/color_text_primary"
+                app:cornerRadius="26dp"
+                app:icon="@drawable/ic_send"
+                app:iconTint="@color/color_background"
+                app:strokeWidth="0dp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/mam_disclaimer"
+            android:textAppearance="@style/TextAppearance.PlantMate.Meta"
+            android:textSize="12sp" />
+    </LinearLayout>
+</LinearLayout>
