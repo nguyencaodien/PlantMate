@@ -138,7 +138,7 @@ components:
 
 # PlantMate design system
 
-Source of truth for every PlantMate screen. Agents (Claude, Gemini, Copilot) and people follow this file; the Android resources implement it: `app/src/main/res/values/colors.xml` and `values-night/colors.xml` (colours), `values/styles.xml` (`TextAppearance.PlantMate.*`, `Widget.PlantMate.*`, `ShapeAppearance.PlantMate.*`), `values/themes.xml`, `values/dimens.xml`. Product truth and constraints live in `PRODUCT.md` and `AGENTS.md`.
+Source of truth for every PlantMate screen. Everyone working on the project follows this file; the Android resources implement it: `app/src/main/res/values/colors.xml` and `values-night/colors.xml` (colours), `values/styles.xml` (`TextAppearance.PlantMate.*`, `Widget.PlantMate.*`, `ShapeAppearance.PlantMate.*`), `values/themes.xml`, `values/dimens.xml`. Product truth and constraints live in `PRODUCT.md` and `AGENTS.md`.
 
 ## Overview
 
