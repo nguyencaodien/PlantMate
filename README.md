@@ -7,11 +7,11 @@
 | Trần Lê Quân | 31241021135 |
 | Lê Quân | 31241021233 |
 | Phạm Tuấn Đạt | 31241025206 |
-# 🌿 PlantMate — UI/UX Prototype
+# 🌿 PlantMate
 
 PlantMate là ứng dụng di động kết nối cộng đồng yêu cây cảnh trong khu vực lân cận — nơi mọi người có thể **cho tặng, trao đổi, bán, và tái định cư (rehome)** cây cảnh, đồng thời **theo dõi & chăm sóc** khu vườn của riêng mình với sự hỗ trợ của AI.
 
-> ⚠️ Đây là bản **prototype giao diện** (UI mockup), các phản hồi AI trong ứng dụng hiện đang ở chế độ mô phỏng (simulated).
+> Mã nguồn ứng dụng Android (Java/XML) nằm trong thư mục `android/`. Xem cách chạy tại [android/README.md](android/README.md) và [ANDROID-SETUP.md](ANDROID-SETUP.md).
 
 ----------------------------------------------------
 
