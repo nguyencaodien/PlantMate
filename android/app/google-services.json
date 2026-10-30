@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "286955189057",
+    "project_id": "plantmate-be289",
+    "storage_bucket": "plantmate-be289.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286955189057:android:c9743003e06b08ecb5a7c0",
+        "android_client_info": {
+          "package_name": "com.example.ungdungchiasecaycanh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286955189057-htt81hs7lair8j7im0jovtsu29f89bhe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ungdungchiasecaycanh",
+            "certificate_hash": "4255562ecca3e0117606035463aab3d0da8289cc"
+          }
+        },
+        {
+          "client_id": "286955189057-b7c6colrnv956diho0bets6s2e8688k1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkkb4mBJyqbEZ3mc2qcszngb6FDa1KY-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286955189057-b7c6colrnv956diho0bets6s2e8688k1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
