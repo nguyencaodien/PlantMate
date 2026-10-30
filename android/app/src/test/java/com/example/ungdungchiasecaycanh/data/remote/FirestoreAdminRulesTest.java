@@ -14,7 +14,8 @@ public class FirestoreAdminRulesTest {
         Path cwd = Path.of(System.getProperty("user.dir"));
         Path file = cwd.resolve("firestore.rules");
         if (!Files.exists(file)) file = cwd.resolve("../firestore.rules");
-        return Files.readString(file.normalize());
+        if (!Files.exists(file)) file = cwd.resolve("../../firestore.rules");
+        return Files.readString(file.normalize()).replace("\r\n", "\n");
     }
 
     private static String section(String rules, String start, String end) {
