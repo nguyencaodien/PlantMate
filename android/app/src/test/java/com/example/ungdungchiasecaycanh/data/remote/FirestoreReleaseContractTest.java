@@ -30,6 +30,7 @@ public class FirestoreReleaseContractTest {
         Path cwd = Paths.get(System.getProperty("user.dir"));
         Path file = cwd.resolve("firestore.rules");
         if (!Files.exists(file)) file = cwd.resolve("../firestore.rules");
-        return new String(Files.readAllBytes(file), StandardCharsets.UTF_8);
+        if (!Files.exists(file)) file = cwd.resolve("../../firestore.rules");
+        return new String(Files.readAllBytes(file), StandardCharsets.UTF_8).replace("\r\n", "\n");
     }
 }
