@@ -429,7 +429,7 @@ public class ConversationViewModel extends ViewModel {
                 mediaSentVersion, mediaErrorVersion, cardListings));
     }
 
-    private static boolean isMissing(Exception error) {
+    static boolean isMissing(Exception error) {
         Throwable cause = error;
         while (cause != null) {
             if (cause.getMessage() != null
