@@ -234,7 +234,7 @@ public class ConversationViewModel extends ViewModel {
     }
 
     public void sendTextMessage(String text) {
-        if (conversation == null || currentUid == null || sending || !ownBlockKnown || ownBlocked) return;
+        if (!canSend()) return;
         try {
             ChatRepository.normalizeMessageText(text);
         } catch (IllegalArgumentException error) {
@@ -318,7 +318,12 @@ public class ConversationViewModel extends ViewModel {
     }
 
     private boolean canSend() {
-        return conversation != null && currentUid != null && !sending && ownBlockKnown && !ownBlocked;
+        return canSend(conversation != null && currentUid != null, sending, ownBlockKnown, ownBlocked);
+    }
+
+    /** Nothing is sent before the chat is loaded, during a send, or until the block state is known and clear. */
+    static boolean canSend(boolean loaded, boolean sending, boolean blockKnown, boolean blocked) {
+        return loaded && !sending && blockKnown && !blocked;
     }
 
     private void sendMedia(Task<Boolean> task, File cleanup) {
@@ -424,7 +429,7 @@ public class ConversationViewModel extends ViewModel {
                 mediaSentVersion, mediaErrorVersion, cardListings));
     }
 
-    private static boolean isMissing(Exception error) {
+    static boolean isMissing(Exception error) {
         Throwable cause = error;
         while (cause != null) {
             if (cause.getMessage() != null
