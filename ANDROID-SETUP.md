@@ -1,11 +1,11 @@
 # Chạy ứng dụng Android PlantMate
 
-> Trạng thái: hướng dẫn này mô tả cấu hình cần có để chạy bản Android. Tại thời điểm cập nhật, nhánh `main` của repository vẫn là prototype UI/UX; chưa có đầy đủ mã nguồn Android để clone và build. Thêm hướng dẫn này không tự đưa mã Android lên repository.
+> Trạng thái: mã nguồn Android đã có trên nhánh `main`, trong thư mục `android/`.
 
-## Khi mã Android đã được đưa lên
+## Mở và chạy ứng dụng
 
 1. Cài Android Studio và Android SDK theo phiên bản yêu cầu trong cấu hình dự án.
-2. Clone repository và mở thư mục gốc có `settings.gradle.kts` trong Android Studio.
+2. Clone repository và mở thư mục `android/` (nơi có `settings.gradle.kts`) trong Android Studio.
 3. Đợi Gradle Sync hoàn tất.
 4. Cấu hình Firebase như phần dưới.
 5. Chọn thiết bị Android hoặc máy ảo, sau đó chạy cấu hình `app`.
