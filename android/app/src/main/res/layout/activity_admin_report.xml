@@ -78,9 +78,9 @@
                     android:paddingEnd="12dp"
                     android:text="@string/admin_badge"
                     android:textAppearance="@style/TextAppearance.PlantMate.Tag"
-                    android:textColor="#FF0A3622"
+                    android:textColor="@color/color_on_accent"
                     app:drawableStartCompat="@drawable/ic_lock"
-                    app:drawableTint="#FF0A3622" />
+                    app:drawableTint="@color/color_on_accent" />
             </LinearLayout>
 
             <LinearLayout
