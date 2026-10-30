@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "hosting/public",
+    "ignore": ["**/.*"],
+    "headers": [
+      {
+        "source": "/plants/**",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
+      }
+    ]
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  }
+}
