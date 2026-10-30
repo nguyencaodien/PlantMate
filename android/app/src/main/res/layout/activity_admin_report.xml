@@ -116,7 +116,7 @@
                             android:paddingStart="12dp"
                             android:paddingEnd="12dp"
                             android:textAppearance="@style/TextAppearance.PlantMate.Label"
-                            android:textColor="#FF78350F"
+                            android:textColor="@color/status_reserved_ink"
                             android:textSize="13sp" />
 
                         <TextView
@@ -205,7 +205,7 @@
                     android:background="@drawable/bg_status_active"
                     android:padding="14dp"
                     android:textAppearance="@style/TextAppearance.PlantMate.Label"
-                    android:textColor="#FF14532D"
+                    android:textColor="@color/status_active_ink"
                     android:visibility="gone" />
 
                 <TextView
