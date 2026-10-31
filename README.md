@@ -162,8 +162,3 @@ PlantMate/
 └── README.md
 ```
 
----
-
-<p align="center">
-  Made with 💚 by PlantMate Team
-</p>
